@@ -5,4 +5,5 @@ import unittest
 
 class TestRepository(unittest.TestCase):
     def test_install(self):
-        pass
+        a = 1
+        return 'ok' + int(a)
