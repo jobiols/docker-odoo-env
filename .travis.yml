@@ -1,0 +1,22 @@
+language: python
+sudo: false
+cache: pip
+
+python:
+  - "2.7"
+
+git:
+  depth: 1
+
+install:
+  - pip install codecov
+  - pip install flake8
+
+script:
+  - python docker_odoo_env/test_oe.py
+  - coverage run docker_odoo_env/command_line.py
+  - flake8 docker_odoo_env/test_oe.py
+
+after_success:
+  - codecov
+  - coveralls
