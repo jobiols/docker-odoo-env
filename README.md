@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jobiols/docker_odoo_env.svg?branch=master)](https://travis-ci.org/jobiols/docker_odoo_env)
 [![codecov](https://codecov.io/gh/jobiols/docker_odoo_env/branch/master/graph/badge.svg)](https://codecov.io/gh/jobiols/docker_odoo_env)
+[![Maintainability](https://api.codeclimate.com/v1/badges/26d770897cbc7a48afcb/maintainability)](https://codeclimate.com/github/jobiols/docker_odoo_env/maintainability)
 
 This is a small tool to manage dockerized odoo environments develop
 staging and production.
