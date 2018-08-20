@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import setuptools
+from docker_odoo_env.version import VERSION
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="docker_odoo_env",
-    version="0.0.3",
+    version=VERSION,
     author="jeo Software",
     author_email="jorge.obiols@gmail.com",
     description='A small tool to manage Dockerized Odoo',

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import parse_args
+
 
 def main():
-    print 'hello world!'
+    args = parse_args.parse()
+
