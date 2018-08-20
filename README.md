@@ -7,6 +7,8 @@ staging and production.
 
 # Installation
 
-
 To install with pip, run: `pip install docker-odoo-env`
 
+# Usage
+
+    oe [show|update|dependency|backup|restore] [options]
