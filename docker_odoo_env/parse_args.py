@@ -58,10 +58,12 @@ def new_update_parser(sub):
     parser.add_argument('-d',
                         dest='debug',
                         choices=['on', 'off'],
-                        help='Debug mode')
+                        help='force restart and change debug mode')
     parser.add_argument('-c',
                         dest='client',
                         help='Client code')
+    parser.add_argument('-r',
+                        help='Restart server')
 
 
 def new_backup_parser(sub):
