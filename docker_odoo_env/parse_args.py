@@ -82,6 +82,14 @@ def new_restore_parser(sub):
                             help='restores a database from backup_dir')
 
 
+def new_qa_parser(sub):
+    parser = sub.add_parser('qa',
+                            help='quality analisys')
+    parser.add_argument('-d',
+                        dest='test_database',
+                        help='test database name')
+
+
 def parse():
     """ parsear los argumentos y completarlos con los datos almacenados en la
         configuracion devuelve un diccionario con los parametros
@@ -106,6 +114,7 @@ Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
     new_dependency_parser(subparser)
     new_backup_parser(subparser)
     new_restore_parser(subparser)
+    new_qa_parser(subparser)
 
     # obtengo los comandos del runstring
     args = parser.parse_args()
