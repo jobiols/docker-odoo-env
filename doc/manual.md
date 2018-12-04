@@ -8,7 +8,7 @@ de odoo. Permite crear una instalacion de cero en un VPS virgen, con
 extrema facilidad, ademas maneja ambientes de desarrollo y staging
 las unicas dependencias necesarias son python 2.7 y git.
 
-**oe sh[ow]** Muestra o modifica las opciones almacenadas
+**oe config** Muestra o modifica las opciones almacenadas
 oe mantiene un archivo yaml con la configuracion, de manera que cuando
 se invoca una orden por ejemplo update no hay que reiterar cual es el 
 cliente, el nombre de la base de datos o si estamos en produccion,

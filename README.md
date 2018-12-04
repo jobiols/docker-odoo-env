@@ -13,4 +13,4 @@ To install with pip, run: `pip install docker-odoo-env`
 
 # Usage
 
-    oe [show|update|up|down|backup|restore|qa] [options]
+    oe [config|update|up|down|backup|restore|qa] [options]

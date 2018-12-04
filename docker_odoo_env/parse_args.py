@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import json
+import yaml, json
 import argparse
 from version import VERSION
 from messages import Msg
@@ -9,11 +9,11 @@ from messages import Msg
 msg = Msg()
 
 user_config_path = os.path.expanduser('~') + '/.config/oe/'
-user_config_file = user_config_path + 'config.json'
+user_config_file = user_config_path + 'config.yaml'
 
 
-def merge_args(args,data):
-    return data
+def merge_args(args, data):
+    return vars(args)
 
 
 def command_config(data):
@@ -33,13 +33,13 @@ def save_config(data):
     if not os.path.exists(user_config_path):
         os.makedirs(user_config_path)
     with open(user_config_file, 'w') as config:
-        json.dump(data, config)
+        yaml.dump(data, config, default_flow_style=False, allow_unicode=True)
 
 
 def get_config():
     if os.path.isfile(user_config_file):
         with open(user_config_file, 'r') as config:
-            return json.load(config)
+            return yaml.load(config)
     else:
         return {}
 
@@ -47,9 +47,28 @@ def get_config():
 def new_config_parser(sub):
     parser = sub.add_parser('config',
                             help='config current configuration')
-    parser.add_argument('-c',
-                        dest='cleanup',
-                        help='Cleanup config data')
+    parser.add_argument('-c', '--client',
+                        dest='client',
+                        action='store_true',
+                        help='Client name')
+    parser.add_argument('-e',
+                        dest='environment',
+                        choices=['production', 'staging', 'development'],
+                        help='Environment where to deploy')
+    parser.add_argument('-n', '--nginx',
+                        dest='nginx',
+                        choices=['on', 'off'],
+                        help='Install Nginx reverse proxy')
+    parser.add_argument('-v', '--verbose',
+                        dest='verbose',
+                        choices=['on', 'off'],
+                        help='Install Nginx reverse proxy')
+    parser.add_argument('-d', '--database',
+                        dest='database',
+                        help='Default database')
+    parser.add_argument('--defapp',
+                        dest='defapp',
+                        help='git path for default main application')
 
 
 def new_update_parser(sub):
@@ -118,8 +137,10 @@ Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
 
     # obtengo los comandos del runstring
     args = parser.parse_args()
+
     # le agrego los comandos almacenados
     data = merge_args(args, get_config())
+    save_config(data)
 
     if args.command:
         if args.command == 'config':
@@ -128,7 +149,6 @@ Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
         if args.command == 'update':
             return command_update(args, data)
 
-    save_config(data)
 
     if args.command:
         data['command'] = args.command
