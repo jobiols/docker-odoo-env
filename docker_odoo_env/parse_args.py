@@ -151,6 +151,5 @@ Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
         if args.command == 'update':
             return command_update(args, data)
 
-
     if args.command:
         data['command'] = args.command
