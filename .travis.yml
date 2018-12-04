@@ -9,7 +9,8 @@ python:
 git:
   depth: 1
 
-#install:
+install:
+  - pip install -r requirements.txt
 #  - pip install codecov
 #  - pip install flake8
 
