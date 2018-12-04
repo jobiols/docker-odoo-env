@@ -15,8 +15,9 @@ cliente, el nombre de la base de datos o si estamos en produccion,
 desarrollo o staging.
 
 Si se invoca sin parametros muestra las variables almacenadas y con cada
-uno de los siguientes parametros permite setear las variables, aqui hay
-una descripcion de cada una.
+uno de los siguientes parametros permite setear las variables, y si se
+le pasa la variable en blanco toma el default. Aqui hay una descripcion 
+de cada una.
     
     --client client-name El nombre del cliente es util en ambiente de 
             desarrollo para poder tener multiples instalaciones (una por
@@ -50,8 +51,12 @@ una descripcion de cada una.
             DEFAULT nombre-cliente_prod
     --defapp git-path-to-client-app
             DEFAULT nombre-cliente_default
+    --odoo-image user/image:tag
+            Esta opcion sobreescribe la imagen que viene en el manifiesto
+            se considera solo cuando estoy en desarrollo
+            DEFAULT None
 
-**oe upd[ate]**  Instala o actualiza una instalación
+**oe upd**  Instala o actualiza una instalación
 
 Las siguientes opciones son requeridas o deben estar almacenadas
 
@@ -66,14 +71,24 @@ Cuando se invoca la opcion oe update, sin parametros se buscan las opciones
 almacenadas, si falta alguna/s se requiere/n y si estan todas se procede
 con lo siguiente:
 
-3. hace un backup de la base de datos activa (si se puede)
-4. baja todas las imagenes docker (si estan activas)
-5. verifica las dependencias en el servidor y las instala (apt-get update y docker)
-6. hace pull de todos los repos y las imagenes
-7. levanta image postgres y aeroo (a veces aeroo no es requerido)
-8. hace un update all dos veces (filtrando mensajes info)
-9. instala la aplicacion por defecto
-10. levanta todas las imagenes requeridas
+**Si estoy en produccion o staging**
+
+1. hace un backup de la base de datos activa (si se puede)
+2. baja todas las imagenes docker (si estan activas)
+3. verifica las dependencias en el servidor y las instala (apt-get update y docker)
+4. hace pull de todos los repos y las imagenes
+5. levanta image postgres y aeroo (a veces aeroo no es requerido)
+6. Si no esta creado, crea el odoo.conf poniendo workers = 3
+7. hace un update all dos veces (filtrando mensajes info)
+8. instala o si esta instalada, actualiza la aplicacion por defecto
+9. levanta todas las demas imagenes requeridas 
+
+**Si estoy en desarrollo**
+
+-p hace pull de todos los repos y las imagenes
+-R levanta image postgres y aeroo (a veces aeroo no es requerido)
+-r Si no esta creado, crea el odoo.conf poniendo workers = 0; levanta odoo y saca log por consola
+-u -m modulo
 
 **backup** generates a backup in the backup_dir folder
     -d database name
@@ -95,7 +110,6 @@ con lo siguiente:
 5. instalar el modulo de la aplicacion filtrando los mensajes info
 
 **wishes**
-modo desarrollo y modo produccion
 
 Importante ver como INSTALAR modulos no solo actualizar.
 
