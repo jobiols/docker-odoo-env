@@ -2,12 +2,11 @@
 
 verificar que tengamos las ultimas versiones
 
-    python3 -m pip install --user --upgrade setuptools wheel
-    python3 -m pip install --user --upgrade twine
+    python -m pip install --user --upgrade setuptools wheel twine
  
 ejecutar en el directorio donde esta setup.py
     
-    python3 setup.py sdist bdist_wheel
+    python setup.py sdist bdist_wheel
     
 # Uploading the distribution archives
     
