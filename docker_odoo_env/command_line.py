@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import parse_args
+from docker_odoo_env.parse_args import parse
 
 
 def main():
-    args = parse_args.parse()
+    args = parse()
