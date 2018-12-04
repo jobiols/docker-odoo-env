@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-
+from __future__ import print_function
 import os
 import yaml, json
 import argparse
 from version import VERSION
 from messages import Msg
+
 
 msg = Msg()
 
@@ -18,7 +19,7 @@ def merge_args(args, data):
 
 def command_config(data):
     msg.run('Saved options')
-    print json.dumps(data, indent=4)
+    print(json.dumps(data, indent=4))
 
 
 def command_update(args, data):

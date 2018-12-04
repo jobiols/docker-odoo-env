@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 import sys
 
 
@@ -27,18 +28,18 @@ class Msg():
         return YELLOW_LIGHT + string + CLEAR
 
     def run(self, msg):
-        print self._yellow(msg)
+        print(self._yellow(msg))
 
     def done(self, msg):
-        print self._green(msg)
+        print(self._green(msg))
 
     def err(self, msg):
-        print self._red(msg)
+        print(self._red(msg))
         sys.exit()
 
     def inf(self, msg):
         if msg:
-            print self._yellow_light(msg)
+            print(self._yellow_light(msg))
 
     def warn(self, msg):
-        print self._red(msg)
+        print(self._red(msg))
