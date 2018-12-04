@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jobiols/docker_odoo_env.svg?branch=master)](https://travis-ci.org/jobiols/docker_odoo_env)
 [![codecov](https://codecov.io/gh/jobiols/docker_odoo_env/branch/master/graph/badge.svg)](https://codecov.io/gh/jobiols/docker_odoo_env)
-[![Maintainability](https://api.codeclimate.com/v1/badges/26d770897cbc7a48afcb/maintainability)](https://codeclimate.com/github/jobiols/docker_odoo_env/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/jobiols/docker_odoo_env/badge)](https://www.codefactor.io/repository/github/jobiols/docker_odoo_env)
 
 This is a small tool to manage dockerized odoo environments develop
 staging and production.
@@ -13,4 +13,4 @@ To install with pip, run: `pip install docker-odoo-env`
 
 # Usage
 
-    oe [show|update|dependency|backup|restore] [options]
+    oe [show|update|up|down|backup|restore|qa] [options]
