@@ -15,11 +15,11 @@ ejecutar en el directorio donde esta setup.py
     
 luego el proyecto se puede ver en
 
-    https://pypi.org/project/docker_odoo_env/
+    https://pypi.org/project/docker-odoo-env/
 
 #Installing your newly uploaded package
 
-    pip install docker_odoo_env
+    pip install docker-odoo-env
     
 
     

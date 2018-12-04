@@ -4,8 +4,8 @@ import os
 import yaml
 import json
 import argparse
-from version import VERSION
-from messages import Msg
+from docker_odoo_env.version import VERSION
+from docker_odoo_env.messages import Msg
 
 
 msg = Msg()
@@ -41,7 +41,7 @@ def save_config(data):
 def get_config():
     if os.path.isfile(user_config_file):
         with open(user_config_file, 'r') as config:
-            return yaml.load(config)
+            return yaml.safe_load(config)
     else:
         return {}
 
@@ -93,9 +93,14 @@ def new_backup_parser(sub):
                                  'folder')
 
 
-def new_dependency_parser(sub):
-    parser = sub.add_parser('dependency',
-                            help='check and install dependencies')
+def new_up_parser(sub):
+    parser = sub.add_parser('up',
+                            help='Start docker images')
+
+
+def new_down_parser(sub):
+    parser = sub.add_parser('down',
+                            help='Stop docker images')
 
 
 def new_restore_parser(sub):
@@ -132,7 +137,8 @@ Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
     subparser = parser.add_subparsers(help='commands', dest='command')
     new_config_parser(subparser)
     new_update_parser(subparser)
-    new_dependency_parser(subparser)
+    new_up_parser(subparser)
+    new_down_parser(subparser)
     new_backup_parser(subparser)
     new_restore_parser(subparser)
     new_qa_parser(subparser)

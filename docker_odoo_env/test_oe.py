@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from parse_args import save_config, get_config
+from docker_odoo_env.parse_args import save_config, get_config
 
 
 class TestRepository(unittest.TestCase):
