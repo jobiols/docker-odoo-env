@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import os
-import yaml, json
+import yaml
+import json
 import argparse
 from version import VERSION
 from messages import Msg
