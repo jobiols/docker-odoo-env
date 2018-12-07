@@ -85,10 +85,10 @@ con lo siguiente:
 
 **Si estoy en desarrollo**
 
--p hace pull de todos los repos y las imagenes
+-p hace pull de todos los repos y las imagenes, recrea los volumenes addons y librerias en sendos repositorios.
 -R levanta image postgres y aeroo (a veces aeroo no es requerido)
 -r Si no esta creado, crea el odoo.conf poniendo workers = 0; levanta odoo y saca log por consola
--u -m modulo
+-u -m [modulo|all] hace update all
 
 **backup** generates a backup in the backup_dir folder
     -d database name
@@ -101,13 +101,10 @@ con lo siguiente:
 - Pensar como hacer un ambiente desarrollo donde se pueda poner imagenes nuevas y probarlas.
 - Al arrancar postgres seria bueno experimentar con volume en lugar de -v
 
-**opcion deploy** que deberia hacer:
+**qa**
 
-1. bajar los fuentes y las imagenes
-2. arrancar la base de datos
-3. crear el config file con las opciones que saca del manifiesto
-4. correr un update all filtrando los mensajes info
-5. instalar el modulo de la aplicacion filtrando los mensajes info
+-d crear base de datos de test
+
 
 **wishes**
 
@@ -120,3 +117,5 @@ oe develop -l (lista las variables que quedaron almacenadas en un json)
 oe develop -r (arranca mostrando el log) en develop siempre muestra el log
 
 en modo desarrollo se activan los sink de mails y demas yerbas para que no mandemos mails a los clientes. ver tecnativa.
+
+crear bases de datos de test 
