@@ -85,7 +85,7 @@ con lo siguiente:
 
 **Si estoy en desarrollo**
 
--p hace pull de todos los repos y las imagenes, recrea los volumenes addons y librerias en sendos repositorios.
+-p hace pull de todos los repos y las imagenes, recrea los volumenes addons y librerias en sendos repositorios (agregar .gitignore)
 -R levanta image postgres y aeroo (a veces aeroo no es requerido)
 -r Si no esta creado, crea el odoo.conf poniendo workers = 0; levanta odoo y saca log por consola
 -u -m [modulo|all] hace update all
