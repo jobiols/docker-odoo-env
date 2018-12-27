@@ -4,7 +4,7 @@ import os
 import yaml
 import json
 import argparse
-from docker_odoo_env.version import VERSION
+from __init__ import __version__
 from docker_odoo_env.messages import Msg
 
 
@@ -125,7 +125,7 @@ def parse():
 ==========================================================================
 Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
 ==========================================================================
-""".format(VERSION))
+""".format(__version__))
 
     parser.add_argument('--version',
                         action='version',

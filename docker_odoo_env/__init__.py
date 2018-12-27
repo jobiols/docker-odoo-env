@@ -1,1 +1,2 @@
-name = "docker_odoo_env"
+__name__ = "docker_odoo_env"
+__version__ = '0.0.6'

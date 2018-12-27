@@ -103,7 +103,8 @@ con lo siguiente:
 
 **qa**
 
--d crear base de datos de test
+-d crear base de datos de test con el modulo default instalado. 
+    
 
 
 **wishes**
