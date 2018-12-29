@@ -16,3 +16,8 @@ class TestRepository(unittest.TestCase):
 
         save_config(data)
         self.assertEqual(data, get_config())
+
+    def test_02(self):
+        """ show help file
+        """
+        pass

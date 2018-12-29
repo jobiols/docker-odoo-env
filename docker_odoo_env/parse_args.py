@@ -4,7 +4,7 @@ import os
 import yaml
 import json
 import argparse
-from __init__ import __version__
+from docker_odoo_env.__init__ import __version__
 from docker_odoo_env.messages import Msg
 
 
@@ -122,14 +122,14 @@ def parse():
     """
 
     parser = argparse.ArgumentParser(description="""
-==========================================================================
-Odoo Environment Manager {} - by jeo Software <jorge.obiols@gmail.com>
-==========================================================================
+==================================================================
+Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
+==================================================================
 """.format(__version__))
 
     parser.add_argument('--version',
                         action='version',
-                        version='%(prog)s {}'.format(VERSION))
+                        version='%(prog)s {}'.format(__version__))
     parser.add_argument('-H',
                         dest='help',
                         help='odoo server server help')
