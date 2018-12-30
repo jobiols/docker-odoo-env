@@ -1,40 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import os
-import yaml
 import argparse
 from docker_odoo_env.__init__ import __version__, __name__
 from docker_odoo_env.messages import Msg
 import importlib
+from config import Config
 
 msg = Msg()
-
-user_config_path = os.path.expanduser('~') + '/.config/oe/'
-user_config_file = user_config_path + 'config.yaml'
-
-
-def merge_args(args, config):
-    """
-    A los datos que estan en args les agrega los datos que vienen en config
-
-    :param args: (namespace) argumentos del parser
-    :param config: (dictionary) argumentos del config.yml
-    :return: args + config (dictionary)
-    """
-    # convertir args a dict
-    ret = vars(args)
-
-    # pasar a ret las cosas que estan en config y no estan definidas en ret
-    for item in config or []:
-        if not ret.get(item) and config.get(item):
-            ret[item] = config.get(item, None)
-
-    # agregar el default para databases
-    if not ret.get('database') and ret.get('client'):
-        ret['database'] = ret['client'] + '_prod'
-        ret['test_database'] = ret['client'] + '_test'
-
-    return ret
+config = Config()
 
 
 def command_update(data):
@@ -50,22 +23,6 @@ def command_update(data):
         msg.err('Must define a client')
 
     backup_database(data)
-
-
-def save_config(data):
-    if not os.path.exists(user_config_path):
-        os.makedirs(user_config_path)
-    with open(user_config_file, 'w') as config:
-        yaml.dump(data, config, default_flow_style=False, allow_unicode=True)
-
-
-def get_config():
-    try:
-        with open(user_config_file, 'r') as config:
-            ret = yaml.safe_load(config)
-    except Exception:
-        return False
-    return ret
 
 
 def new_config_parser(sub):
@@ -186,16 +143,11 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
     new_restore_parser(subparser)
     new_qa_parser(subparser)
 
-    # obtengo los comandos del runstring
-    args = parser.parse_args()
+    # obtengo los comandos del runstring, y los salvo en config
+    config.args = parser.parse_args()
 
-    # le agrego los comandos almacenados
-    data = merge_args(args, get_config())
-    # actualizo el config
-    save_config(data)
-
-    if args.command:
-        name = args.command
+    if config.command:
+        name = config.command
 
         # importar el modulo correspondiente al comando
         module = __name__ + '.commands.' + name + '_command'
@@ -203,7 +155,7 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
 
         # instanciar la clase correspondiente al comando
         driverClass = getattr(command_module, name.capitalize() + "Command")
-        command = driverClass(data)
+        command = driverClass(config)
 
         # ejecutar el comando
         command.execute()

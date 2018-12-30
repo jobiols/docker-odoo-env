@@ -7,10 +7,9 @@ msg = Msg()
 
 
 class ConfigCommand(object):
-    def __init__(self, data):
-        self._data = data
+    def __init__(self, config):
+        self._config = config
 
     def execute(self):
         msg.run('Saved options')
-        for item in self._data:
-            msg.inf('{:11} -> {}'.format(item, str(self._data.get(item))))
+        self._config.list()
