@@ -65,6 +65,7 @@ class Config(object):
         return ret
 
     def list(self):
+        msg.run('Saved options')
         for item in self._args:
             msg.inf('{:11} -> {}'.format(item, str(self._args.get(item))))
 
