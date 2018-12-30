@@ -55,11 +55,11 @@ una descripcion de cada una.
             se considera solo cuando estoy en desarrollo
             DEFAULT None
 
-**oe upd**  Instala o actualiza una instalación
+**oe update**  Instala o actualiza una instalación
 
 Las siguientes opciones son requeridas o deben estar almacenadas
 
-    --cli[ent]
+    --client
     
 Las siguientes opciones no se almacenan
 

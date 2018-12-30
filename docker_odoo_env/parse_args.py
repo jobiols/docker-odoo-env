@@ -2,7 +2,6 @@
 from __future__ import print_function
 import os
 import yaml
-import json
 import argparse
 from docker_odoo_env.__init__ import __version__
 from docker_odoo_env.messages import Msg
@@ -24,9 +23,10 @@ def merge_args(args, config):
     # convertir args a dict
     ret = vars(args)
 
-    # agregar el default para database
+    # agregar el default para databases
     if not ret['database'] and ret['client']:
         ret['database'] = ret['client'] + '_prod'
+        ret['test_database'] = ret['client'] + '_test'
 
     # si hay algo en config pasarlo a ret si en ret no hay nada
     if config:
@@ -89,8 +89,16 @@ def new_config_parser(sub):
                         choices=['on', 'off'],
                         help='Verbose mode')
     parser.add_argument('-d',
+                        dest='debug',
+                        default='off',
+                        choices=['on', 'off'],
+                        help='force restart and change debug mode')
+    parser.add_argument('--database',
                         dest='database',
                         help='Default database')
+    parser.add_argument('--test_database',
+                        dest='test_database',
+                        help='test database for QA')
     parser.add_argument('--defapp',
                         dest='defapp',
                         help='git path for default main application')
@@ -102,22 +110,23 @@ def new_config_parser(sub):
 
 def new_update_parser(sub):
     parser = sub.add_parser('update',
-                            help='creates or updates an installation')
-    parser.add_argument('-d',
-                        dest='debug',
-                        choices=['on', 'off'],
-                        help='force restart and change debug mode')
-    parser.add_argument('-c',
-                        dest='client',
-                        help='Client code')
+                            help='creates or updates an installation.')
     parser.add_argument('-r',
+                        action='store_true',
                         help='Restart server')
+    parser.add_argument('-q',
+                        action='store_true',
+                        help='Quick mode, do not pull repos and images')
 
 
 def new_backup_parser(sub):
     parser = sub.add_parser('backup',
                             help='generates a backup in the backup_dir '
                                  'folder')
+    parser.add_argument('-d',
+                        dest='database',
+                        help='Database to backup, if ommited the database in '
+                             'config will be backed up')
 
 
 def new_up_parser(sub):
@@ -134,13 +143,19 @@ def new_restore_parser(sub):
     parser = sub.add_parser('restore',
                             help='restores a database from backup_dir')
 
+    parser.add_argument('-r',
+                        dest='database',
+                        help='Database file to restore, if ommited, last '
+                             'backup found in backup_dir will be restored')
+
 
 def new_qa_parser(sub):
     parser = sub.add_parser('qa',
                             help='quality analisys')
     parser.add_argument('-d',
                         dest='test_database',
-                        help='test database name')
+                        help='test database for qa, if ommited, the default'
+                             'found in config will be used')
 
 
 def parse():
