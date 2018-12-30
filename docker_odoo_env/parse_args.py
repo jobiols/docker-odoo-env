@@ -23,16 +23,15 @@ def merge_args(args, config):
     # convertir args a dict
     ret = vars(args)
 
+    # pasar a ret las cosas que estan en config y no estan definidas en ret
+    for item in config or []:
+        if not ret.get(item) and config.get(item):
+            ret[item] = config.get(item, None)
+
     # agregar el default para databases
-    if not ret['database'] and ret['client']:
+    if not ret.get('database') and ret.get('client'):
         ret['database'] = ret['client'] + '_prod'
         ret['test_database'] = ret['client'] + '_test'
-
-    # si hay algo en config pasarlo a ret si en ret no hay nada
-    if config:
-        for item in ret:
-            if not ret[item]:
-                ret[item] = config.get(item, None)
 
     return ret
 
@@ -43,12 +42,17 @@ def command_config(data):
         msg.inf('{:11} -> {}'.format(item, str(data.get(item))))
 
 
-def command_update(args, data):
-    if args.debug:
-        data['debug'] = args.debug
-    if args.client:
-        data['client'] = args.client
-    return data
+def command_update(data):
+    """
+        Las siguientes opciones son requeridas o deben estar almacenadas
+        client
+        Si falta alguna se aborta y se muestra el error
+
+    :param data: Diccionario con las opciones a aplicar
+    :return: None
+    """
+    if not data.get('client'):
+        msg.err('Must define a client')
 
 
 def save_config(data):
@@ -197,7 +201,7 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
             return command_config(data)
 
         if args.command == 'update':
-            return command_update(args, data)
+            return command_update(data)
 
     if args.command:
         data['command'] = args.command
