@@ -15,9 +15,8 @@ cliente, el nombre de la base de datos o si estamos en produccion,
 desarrollo o staging.
 
 Si se invoca sin parametros muestra las variables almacenadas y con cada
-uno de los siguientes parametros permite setear las variables, y si se
-le pasa la variable en blanco toma el default. Aqui hay una descripcion 
-de cada una.
+uno de los siguientes parametros permite setear las variables. Aqui hay 
+una descripcion de cada una.
 
     --client client-name El nombre del cliente es util en ambiente de 
             desarrollo para poder tener multiples instalaciones (una por
@@ -50,7 +49,7 @@ de cada una.
     --database base-de-datos base de datos activa
             DEFAULT nombre-cliente_prod
     --defapp git-path-to-client-app
-            DEFAULT nombre-cliente_default
+            es la url al repo del cliente por defecto
     --odoo-image user/image:tag
             Esta opcion sobreescribe la imagen que viene en el manifiesto
             se considera solo cuando estoy en desarrollo

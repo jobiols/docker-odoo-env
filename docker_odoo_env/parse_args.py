@@ -70,30 +70,34 @@ def get_config():
 def new_config_parser(sub):
     parser = sub.add_parser('config',
                             help='config current configuration')
-    parser.add_argument('-c', '--client',
+    parser.add_argument('-c',
                         dest='client',
                         help='Client name')
     parser.add_argument('-e',
                         dest='environment',
-                        choices=['production', 'staging', 'development'],
+                        choices=['prod', 'staging', 'dev'],
                         default='production',
                         help='Environment where to deploy')
-    parser.add_argument('-n', '--nginx',
+    parser.add_argument('-n',
                         dest='nginx',
                         default='on',
                         choices=['on', 'off'],
                         help='Install Nginx reverse proxy')
-    parser.add_argument('-v', '--verbose',
+    parser.add_argument('-v',
                         dest='verbose',
                         default='off',
                         choices=['on', 'off'],
-                        help='Install Nginx reverse proxy')
-    parser.add_argument('-d', '--database',
+                        help='Verbose mode')
+    parser.add_argument('-d',
                         dest='database',
                         help='Default database')
     parser.add_argument('--defapp',
                         dest='defapp',
                         help='git path for default main application')
+    parser.add_argument('--image',
+                        dest='image',
+                        default='Manifest',
+                        help='odoo image, ovewrite the default manifest image')
 
 
 def new_update_parser(sub):
