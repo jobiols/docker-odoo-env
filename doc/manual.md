@@ -6,7 +6,7 @@ docker odoo environment manual
 oe (odoo environment) es una utilidad para manejar ambientes dockerizados 
 de odoo. Permite crear una instalacion de cero en un VPS virgen, con 
 extrema facilidad, ademas maneja ambientes de desarrollo y staging
-las unicas dependencias necesarias son python 2.7 y git.
+las unicas dependencias necesarias son python (v2 o v3) y git.
 
 **oe config** Muestra o modifica las opciones almacenadas
 oe mantiene un archivo yaml con la configuracion, de manera que cuando
@@ -18,7 +18,7 @@ Si se invoca sin parametros muestra las variables almacenadas y con cada
 uno de los siguientes parametros permite setear las variables, y si se
 le pasa la variable en blanco toma el default. Aqui hay una descripcion 
 de cada una.
-    
+
     --client client-name El nombre del cliente es util en ambiente de 
             desarrollo para poder tener multiples instalaciones (una por
             cliente) en la misma maquina. Es requerido en produccion 

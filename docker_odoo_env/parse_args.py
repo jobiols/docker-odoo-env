@@ -7,20 +7,40 @@ import argparse
 from docker_odoo_env.__init__ import __version__
 from docker_odoo_env.messages import Msg
 
-
 msg = Msg()
 
 user_config_path = os.path.expanduser('~') + '/.config/oe/'
 user_config_file = user_config_path + 'config.yaml'
 
 
-def merge_args(args, data):
-    return vars(args)
+def merge_args(args, config):
+    """
+    A los datos que estan en args les agrega los datos que vienen en config
+
+    :param args: (namespace) argumentos del parser
+    :param config: (dictionary) argumentos del config.yml
+    :return: args + config (dictionary)
+    """
+    # convertir args a dict
+    ret = vars(args)
+
+    # agregar el default para database
+    if not ret['database'] and ret['client']:
+        ret['database'] = ret['client'] + '_prod'
+
+    # si hay algo en config pasarlo a ret si en ret no hay nada
+    if config:
+        for item in ret:
+            if not ret[item]:
+                ret[item] = config.get(item, None)
+
+    return ret
 
 
 def command_config(data):
     msg.run('Saved options')
-    print(json.dumps(data, indent=4))
+    for item in data:
+        msg.inf('{:11} -> {}'.format(item, str(data.get(item))))
 
 
 def command_update(args, data):
@@ -39,11 +59,12 @@ def save_config(data):
 
 
 def get_config():
-    if os.path.isfile(user_config_file):
+    try:
         with open(user_config_file, 'r') as config:
-            return yaml.safe_load(config)
-    else:
-        return {}
+            ret = yaml.safe_load(config)
+    except Exception:
+        return False
+    return ret
 
 
 def new_config_parser(sub):
@@ -51,18 +72,20 @@ def new_config_parser(sub):
                             help='config current configuration')
     parser.add_argument('-c', '--client',
                         dest='client',
-                        action='store_true',
                         help='Client name')
     parser.add_argument('-e',
                         dest='environment',
                         choices=['production', 'staging', 'development'],
+                        default='production',
                         help='Environment where to deploy')
     parser.add_argument('-n', '--nginx',
                         dest='nginx',
+                        default='on',
                         choices=['on', 'off'],
                         help='Install Nginx reverse proxy')
     parser.add_argument('-v', '--verbose',
                         dest='verbose',
+                        default='off',
                         choices=['on', 'off'],
                         help='Install Nginx reverse proxy')
     parser.add_argument('-d', '--database',
@@ -122,9 +145,9 @@ def parse():
     """
 
     parser = argparse.ArgumentParser(description="""
-==================================================================
+==============================================================================
 Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
-==================================================================
+==============================================================================
 """.format(__version__))
 
     parser.add_argument('--version',
