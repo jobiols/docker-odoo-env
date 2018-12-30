@@ -4,7 +4,7 @@
 from command import Command
 
 
-class ConfigCommand(Command):
+class UpgradeCommand(Command):
 
     def execute(self):
-        self._config.list()
+        pass

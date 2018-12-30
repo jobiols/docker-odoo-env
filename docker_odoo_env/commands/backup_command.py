@@ -4,7 +4,5 @@
 from command import Command
 
 
-class ConfigCommand(Command):
-
-    def execute(self):
-        self._config.list()
+class BackupCommand(Command):
+    pass

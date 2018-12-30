@@ -4,7 +4,9 @@
 from command import Command
 
 
-class ConfigCommand(Command):
+class DockerDownCommand(Command):
+    def __init__(self, config):
+        self._config = config
 
     def execute(self):
-        self._config.list()
+        pass
