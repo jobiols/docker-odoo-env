@@ -18,6 +18,6 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(data, get_config())
 
     def test_02(self):
-        """ show help file
+        """ merge args
         """
         pass

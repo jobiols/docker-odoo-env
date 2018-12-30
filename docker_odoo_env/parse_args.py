@@ -3,8 +3,9 @@ from __future__ import print_function
 import os
 import yaml
 import argparse
-from docker_odoo_env.__init__ import __version__
+from docker_odoo_env.__init__ import __version__, __name__
 from docker_odoo_env.messages import Msg
+import importlib
 
 msg = Msg()
 
@@ -36,12 +37,6 @@ def merge_args(args, config):
     return ret
 
 
-def command_config(data):
-    msg.run('Saved options')
-    for item in data:
-        msg.inf('{:11} -> {}'.format(item, str(data.get(item))))
-
-
 def command_update(data):
     """
         Las siguientes opciones son requeridas o deben estar almacenadas
@@ -53,6 +48,8 @@ def command_update(data):
     """
     if not data.get('client'):
         msg.err('Must define a client')
+
+    backup_database(data)
 
 
 def save_config(data):
@@ -194,14 +191,19 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
 
     # le agrego los comandos almacenados
     data = merge_args(args, get_config())
+    # actualizo el config
     save_config(data)
 
     if args.command:
-        if args.command == 'config':
-            return command_config(data)
+        name = args.command
 
-        if args.command == 'update':
-            return command_update(data)
+        # importar el modulo correspondiente al comando
+        module = __name__ + '.commands.' + name + '_command'
+        command_module = importlib.import_module(module)
 
-    if args.command:
-        data['command'] = args.command
+        # instanciar la clase correspondiente al comando
+        driverClass = getattr(command_module, name.capitalize() + "Command")
+        command = driverClass(data)
+
+        # ejecutar el comando
+        command.execute()

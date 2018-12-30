@@ -73,8 +73,8 @@ con lo siguiente:
 **Si estoy en produccion o staging**
 
 1. hace un backup de la base de datos activa (si se puede)
-2. baja todas las imagenes docker (si estan activas)
-3. verifica las dependencias en el servidor y las instala (apt-get update y docker)
+2. verifica las dependencias en el servidor y las instala o actualiza (apt-get update y docker)
+3. baja todas las imagenes docker (si estan activas)
 4. hace pull de todos los repos y las imagenes
 5. levanta image postgres y aeroo (a veces aeroo no es requerido)
 6. Si no esta creado, crea el odoo.conf poniendo workers = 3
