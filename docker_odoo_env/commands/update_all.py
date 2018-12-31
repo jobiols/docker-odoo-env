@@ -7,4 +7,5 @@ from docker_odoo_env.commands.command import Command
 class UpdateAll(Command):
 
     def execute(self):
-        pass
+        if self._config.args.get('doc'):
+            self.show_doc()

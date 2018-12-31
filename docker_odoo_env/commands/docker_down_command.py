@@ -9,4 +9,5 @@ class DockerDownCommand(Command):
         self._config = config
 
     def execute(self):
-        pass
+        if self._config.args.get('doc'):
+            self.show_doc()

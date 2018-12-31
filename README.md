@@ -14,4 +14,25 @@ To install with pip, run: `pip install docker-odoo-env`
 
 # Usage
 
-    oe [config|update|up|down|backup|restore|qa] [options]
+    usage: oe [-h] [--version] [-H HELP]
+              {config,update,up,down,backup,restore,qa} ...
+    
+    ==============================================================================
+    Odoo Environment 0.0.a10 - by jeo Software <jorge.obiols@gmail.com>
+    ==============================================================================
+    
+    positional arguments:
+      {config,update,up,down,backup,restore,qa}
+                            commands
+        config              config current configuration
+        update              creates or updates an installation.
+        up                  Start docker images
+        down                Stop docker images
+        backup              generates a backup in the backup_dir folder
+        restore             restores a database from backup_dir
+        qa                  quality analisys
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -H HELP               odoo server server help

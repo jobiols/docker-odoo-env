@@ -10,24 +10,14 @@ msg = Msg()
 config = Config()
 
 
-def command_update(data):
-    """
-        Las siguientes opciones son requeridas o deben estar almacenadas
-        client
-        Si falta alguna se aborta y se muestra el error
-
-    :param data: Diccionario con las opciones a aplicar
-    :return: None
-    """
-    if not data.get('client'):
-        msg.err('Must define a client')
-
-    backup_database(data)
-
-
 def new_config_parser(sub):
     parser = sub.add_parser('config',
                             help='config current configuration')
+
+    parser.add_argument('--doc',
+                        action='store_true',
+                        help='Documentation')
+
     parser.add_argument('-c',
                         dest='client',
                         help='Client name')
@@ -69,6 +59,9 @@ def new_config_parser(sub):
 def new_update_parser(sub):
     parser = sub.add_parser('update',
                             help='creates or updates an installation.')
+    parser.add_argument('--doc',
+                        action='store_true',
+                        help='Documentation')
     parser.add_argument('-r',
                         action='store_true',
                         help='Restart server')

@@ -18,6 +18,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': ['oe=docker_odoo_env.command_line:main'],
     },
+    install_requires=['pyyaml'],
     packages=setuptools.find_packages(),
     classifiers=[
         "Development Status :: 1 - Planning",
@@ -27,6 +28,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Testing :: Unit",
         "Topic :: System :: Software Distribution",
