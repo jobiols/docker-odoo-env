@@ -4,7 +4,9 @@
 from docker_odoo_env.commands.command import Command
 
 
-class ConfigCommand(Command):
+class DockerUpCommand(Command):
+    def __init__(self, config):
+        self._config = config
 
     def execute(self):
-        self._config.list()
+        pass

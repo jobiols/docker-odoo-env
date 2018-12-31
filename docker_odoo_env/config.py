@@ -12,11 +12,11 @@ user_config_file = user_config_path + 'config.yaml'
 
 class Config(object):
     def __init__(self):
-        self._args = dict
+        self._args = {}
 
     @property
     def command(self):
-        return self._args.get('command')
+        return self._args.get('command', False)
 
     @property
     def args(self):

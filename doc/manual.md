@@ -82,11 +82,13 @@ las instala o actualiza (apt-get update y docker)
 
 4. hace pull de todos los repos y las imagenes
 
-5. levanta image postgres y aeroo (a veces aeroo no es requerido)
+5. Si no esta creado, o se fuerza la creacion, crea el odoo.conf poniendo workers = 3
 
-6. Si no esta creado, crea el odoo.conf poniendo workers = 3
+6. levanta todas las imagenes necesarias para update all
+
 7. hace un update all dos veces (filtrando mensajes info)
 8. instala o si esta instalada, actualiza la aplicacion por defecto
+
 9. levanta todas las demas imagenes requeridas 
 
 **Si estoy en desarrollo**

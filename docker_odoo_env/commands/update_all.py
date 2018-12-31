@@ -4,7 +4,7 @@
 from docker_odoo_env.commands.command import Command
 
 
-class ConfigCommand(Command):
+class UpdateAll(Command):
 
     def execute(self):
-        self._config.list()
+        pass

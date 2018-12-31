@@ -4,7 +4,8 @@
 from docker_odoo_env.commands.command import Command
 
 
-class ConfigCommand(Command):
+class OdooConfCommand(Command):
 
     def execute(self):
-        self._config.list()
+        pass
+
