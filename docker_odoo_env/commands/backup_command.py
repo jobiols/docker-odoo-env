@@ -9,3 +9,6 @@ class BackupCommand(Command):
     def execute(self):
         if self._config.args.get('doc'):
             self.show_doc()
+
+        # verificar si esta arriba la imagen de docker, si no lo esta no se
+        # puede hacer backcup

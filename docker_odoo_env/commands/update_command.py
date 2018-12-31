@@ -29,15 +29,15 @@ class UpdateCommand(Command):
             command = BackupCommand(self._config)
             command.execute()
 
+        # Baja todas las imagenes docker (si estan activas)
+        command = DockerDownCommand(self._config)
+        command.execute()
+
         # Si no estoy en desarrollo verifica las dependencias en el servidor y
         # las instala o actualiza (apt-get update y docker)
         if self._config.args.get('environment') not in ['dev']:
             command = UpgradeCommand(self._config)
             command.execute()
-
-        # Baja todas las imagenes docker (si estan activas)
-        command = DockerDownCommand(self._config)
-        command.execute()
 
         # hace pull de todos los repos y las imagenes
         command = PullCommand(self._config)

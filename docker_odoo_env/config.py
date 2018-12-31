@@ -48,6 +48,10 @@ class Config(object):
     def save_config(self):
         if not os.path.exists(user_config_path):
             os.makedirs(user_config_path)
+
+        # ciertos parametros no se tienen que salvar
+        self._args.pop('doc')
+
         with open(user_config_file, 'w') as config:
             yaml.dump(self._args, config, default_flow_style=False,
                       allow_unicode=True)
