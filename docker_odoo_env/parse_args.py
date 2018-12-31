@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import argparse
-from docker_odoo_env.__init__ import __version__, __name__
+from docker_odoo_env import __version__, __name__
 from docker_odoo_env.messages import Msg
 import importlib
-from config import Config
+from docker_odoo_env.config import Config
 
 msg = Msg()
 config = Config()

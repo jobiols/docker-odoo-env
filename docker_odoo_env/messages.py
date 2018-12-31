@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import sys, os
+import sys
+import os
 
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
@@ -43,9 +44,9 @@ class Msg():
     def warn(self, msg):
         print(self._red(msg))
 
-    def text(self, file):
+    def text(self, docfile):
         filepath = os.path.dirname(os.path.realpath(__file__))
-        filename = filepath + '/doc/' + file + '.txt'
+        filename = filepath + '/doc/' + docfile + '.txt'
         try:
             with open(filename, 'r') as doc:
                 for line in doc:
