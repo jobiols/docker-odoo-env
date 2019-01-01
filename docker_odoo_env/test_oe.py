@@ -30,5 +30,6 @@ class TestRepository(unittest.TestCase):
 
     def test_03(self):
         config = Config()
+        config.args['client'] = 'iomaq'
         update_command = UpdateCommand(config)
         update_command.execute()

@@ -50,12 +50,13 @@ class Config(object):
             os.makedirs(user_config_path)
 
         # ciertos parametros no se tienen que salvar
+        to_save = self._args.copy()
         for item in ['doc', 'command']:
-            if self._args.get(item):
-                self._args.pop(item)
+            if to_save.get(item):
+                to_save.pop(item)
 
         with open(user_config_file, 'w') as config:
-            yaml.dump(self._args, config, default_flow_style=False,
+            yaml.dump(to_save, config, default_flow_style=False,
                       allow_unicode=True)
 
     @staticmethod
@@ -76,5 +77,5 @@ class Config(object):
             msg.inf('{:11} -> {}'.format(item, str(self._args.get(item))))
 
     def clear(self):
-        self._args = dict
+        self._args = {}
         self.save_config()

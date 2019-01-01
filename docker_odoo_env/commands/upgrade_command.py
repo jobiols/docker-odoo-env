@@ -9,21 +9,26 @@ msg = Msg()
 
 
 class UpgradeCommand(Command):
-
     def execute(self):
         if self._config.args.get('doc'):
             self.show_doc()
 
-        # Actualizar instalacion
         msg.inf('Updating Server')
-        subprocess.call('sudo ls', shell=True)
 
-        p = subprocess.Popen(['sudo docker', '-v'],
-                             stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE,
-                             shell=True)
+        """
+        from subprocess import Popen, PIPE
+        import getpass
+        # Actualizar instalacion
 
-        stdout = p.communicate()[0]
+        command = 'docker -v'.split()
+        p = Popen(['sudo', '-S'] + command,
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE,
+                  universal_newlines=True)
+        passw = getpass.getpass('')
+        sudo_prompt = p.communicate(passw+'\n')
 
-        subprocess.call('sudo apt-get update && sudo apt-get upgrade -y',
-                        shell=True)
+        print(sudo_prompt[0])
+
+        """
+        command = 'sudo docker -v'
+        subprocess.call(command, shell=True)
