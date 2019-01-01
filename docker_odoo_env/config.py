@@ -50,7 +50,9 @@ class Config(object):
             os.makedirs(user_config_path)
 
         # ciertos parametros no se tienen que salvar
-        self._args.pop('doc')
+        for item in ['doc', 'command']:
+            if self._args.get(item):
+                self._args.pop(item)
 
         with open(user_config_file, 'w') as config:
             yaml.dump(self._args, config, default_flow_style=False,
