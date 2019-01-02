@@ -18,7 +18,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': ['oe=docker_odoo_env.command_line:main'],
     },
-    install_requires=['pyyaml'],
+    install_requires=['pyyaml', 'git-aggregator'],
     packages=setuptools.find_packages(),
     classifiers=[
         "Development Status :: 1 - Planning",
@@ -33,5 +33,5 @@ setuptools.setup(
         "Topic :: Software Development :: Testing :: Unit",
         "Topic :: System :: Software Distribution",
     ],
-      keywords="odoo docker environment",
+    keywords="odoo docker environment",
 )

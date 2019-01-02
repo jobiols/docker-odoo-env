@@ -60,6 +60,7 @@ una descripcion de cada una.
 Las siguientes opciones son requeridas o deben estar almacenadas
 
     --client
+    --defapp
     
 Las siguientes opciones no se almacenan
 
@@ -70,7 +71,8 @@ Cuando se invoca la opcion oe update, sin parametros se buscan las opciones
 almacenadas, si falta alguna/s se requiere/n y si estan todas se procede
 con lo siguiente:
 
-**Si estoy en produccion o staging**
+0. Testear si esta creada la estructura de directorios y crearla si no
+existe
 
 1. Si no estoy en desarrollo, intenta hacer un backup de la base de datos 
 activa, podria no haber base si es la primera instalacion.

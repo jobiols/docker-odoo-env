@@ -9,6 +9,7 @@ from docker_odoo_env.commands.pull_command import PullCommand
 from docker_odoo_env.commands.odoo_conf_command import OdooConfCommand
 from docker_odoo_env.commands.docker_up_command import DockerUpCommand
 from docker_odoo_env.commands.update_all import UpdateAll
+from docker_odoo_env.commands.directory_hierarchy_command import DirectoryHierarchyCommand
 from docker_odoo_env.messages import Msg
 
 msg = Msg()
@@ -19,9 +20,16 @@ class UpdateCommand(Command):
     def execute(self):
         if not self._config.args.get('client'):
             msg.err('Must define a client')
+        if not self._config.args.get('defapp'):
+            msg.err('Must define a default application')
 
         if self._config.args.get('doc'):
             self.show_doc()
+
+        # Testear si esta creada la estructura de directorios y crearla si no
+        # existe
+        command = DirectoryHierarchyCommand(self._config)
+        command.execute()
 
         # Si no estoy en desarrollo, intenta hacer un backup de la base de
         # datos activa, podria no haber base si es la primera instalacion.

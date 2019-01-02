@@ -31,4 +31,4 @@ class UpgradeCommand(Command):
 
         """
         command = 'sudo docker -v'
-        subprocess.call(command, shell=True)
+        #subprocess.call(command, shell=True)

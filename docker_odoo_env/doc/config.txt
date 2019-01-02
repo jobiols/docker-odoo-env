@@ -39,3 +39,8 @@ environment[dev|prod|stagging]
         * odoo corre sobre los fuentes instalados internamente en la imagen
         * Al clonar los repositorios lo hace con --depth 1
         * Se activan los servicios reales de SMTP FETCHMAIL ETC
+
+defapp
+    la aplicacion default para crear la instancia de odoo, tiene esta forma
+    https://github.com/jobiols/cl-iomaq.git
+

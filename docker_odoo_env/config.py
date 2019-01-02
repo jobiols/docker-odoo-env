@@ -13,6 +13,7 @@ user_config_file = user_config_path + 'config.yaml'
 class Config(object):
     def __init__(self):
         self._args = {}
+        self._base_dir = '/odoo_testing/'
 
     @property
     def command(self):
