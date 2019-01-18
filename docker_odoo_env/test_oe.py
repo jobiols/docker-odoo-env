@@ -43,7 +43,7 @@ class TestRepository(unittest.TestCase):
         """ Create hierarchy
         """
         config = Config()
-        config._base_dir = '~/odoo_test/'
+        config._base_dir = '/home/jobiols/odoo_test/'
 
         import shutil
         if os.path.isdir(config._base_dir):
