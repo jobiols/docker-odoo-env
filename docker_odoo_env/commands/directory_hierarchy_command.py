@@ -24,6 +24,7 @@ IN_BACKUP_DIR = '/var/odoo/backups/'
 class OdooManifest(object):
     def __init__(self, manifest_path, client):
         self._manifest = self.get_manifest(manifest_path, client)
+        #assert not self._manifest
 
     @property
     def repos(self):
@@ -62,6 +63,7 @@ class OdooManifest(object):
                     name = name.split()[0]
                     if name == client:
                         return manifest
+        return False
 
     @staticmethod
     def load_manifest(filename):
@@ -100,36 +102,38 @@ class DirectoryHierarchyCommand(Command):
 
         # cambiar ownership
         username = pwd.getpwuid(os.getuid()).pw_name
-        command = 'sudo chown {0}:{0} {1}'.format(username, self._config._base_dir)
+        command = 'sudo chown {0}:{0} {1}'.format(username,
+                                                  self._config._base_dir)
         call(command)
 
         # preparar la bajada de la aplicacion default
-        client = '.default_' + self._config.args['client']
+        client = '.{}_default'.format(self._config.args['client'])
         defapp = self._config.args['defapp']
         aggregator_config = {
             client: {
                 'remotes': {
                     'default': defapp
                 },
-                'merges': ['default 9.0'],
-                'target': 'default 9.0'
+                'merges': ['default 11.0'],
+                'target': 'default 11.0'
             }
         }
-        # bajar la default app temporariamente solo para leer el manifest
+        # crear el defapp.yaml para bajar la default app temporariamente
         with open(self._config._base_dir + 'defapp.yaml', 'w') as config:
             yaml.dump(aggregator_config, config, default_flow_style=False,
                       allow_unicode=True)
 
-        # aggregator baja el repo en en current dir
+        # hay que moverse porque aggregator baja el repo en en current dir
         os.chdir(self._config._base_dir)
         command = 'gitaggregate -c ' + self._config._base_dir + 'defapp.yaml'
         call(command)
 
         # leer el manifest
-        manifest_path = self._config._base_dir + '.default_iomaq/iomaq_default/'
+        manifest_path = self._config._base_dir + '.scaffolding_default/scaffolding_default/'
         manifest = OdooManifest(manifest_path, self._config.args['client'])
 
-        base_dir = '{}odoo-{}/'.format(self._config._base_dir, manifest.version,
+        base_dir = '{}odoo-{}/'.format(self._config._base_dir,
+                                       manifest.version,
                                        self._config.args['client'])
 
         # crear el resto de la jerarquia

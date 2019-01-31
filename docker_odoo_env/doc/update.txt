@@ -1,7 +1,0 @@
-Actualiza o crea una instalación de Odoo
-----------------------------------------
-
-La opción update crea o actualiza una instalación de odoo según en que ambiente
-se encuentre.
-
-ver update -h para mas opciones

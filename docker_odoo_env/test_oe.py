@@ -18,12 +18,12 @@ class TestRepository(unittest.TestCase):
         config = Config()
         config.clear()
 
-        config.args = argparse.Namespace(client='iomaq', dos=2)
+        config.args = argparse.Namespace(client='scaffolding', dos=2)
         data = config.args
 
-        self.assertEqual(data.get('client'), 'iomaq')
-        self.assertEqual(data.get('database'), 'iomaq_prod')
-        self.assertEqual(data.get('test_database'), 'iomaq_test')
+        self.assertEqual(data.get('client'), 'scaffolding')
+        self.assertEqual(data.get('database'), 'scaffolding_prod')
+        self.assertEqual(data.get('test_database'), 'scaffolding_test')
 
     def test_02(self):
         """ Test config command
@@ -34,8 +34,8 @@ class TestRepository(unittest.TestCase):
 
     def test_03(self):
         config = Config()
-        config.args['client'] = 'iomaq'
-        config.args['defapp'] = 'https://github.com/jobiols/cl-iomaq.git'
+        config.args['client'] = 'scaffolding'
+        config.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
         update_command = UpdateCommand(config)
         update_command.execute()
 
@@ -43,36 +43,58 @@ class TestRepository(unittest.TestCase):
         """ Create hierarchy
         """
         config = Config()
-        config._base_dir = '/home/jobiols/odoo_test/'
+        config._base_dir = os.path.expanduser('~/') + 'odoo_test/'
 
         import shutil
         if os.path.isdir(config._base_dir):
             shutil.rmtree(config._base_dir)
 
-        config.args['client'] = 'iomaq'
-        config.args['defapp'] = 'https://github.com/jobiols/cl-iomaq.git'
+        config.args['client'] = 'scaffolding'
+        config.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
         hierarchy = DirectoryHierarchyCommand(config)
         hierarchy.execute()
 
     def test_05(self):
         """ Chequear manifest
         """
-        manifest_path = os.path.abspath(__file__).strip('test_oe.py') + 'doc/'
-        manifest = OdooManifest(manifest_path, 'iomaq')
+        manifest_path = os.path.expanduser(
+            '~/') + 'odoo_test/.scaffolding_default/scaffolding_default'
+
+        manifest = OdooManifest(manifest_path, 'scaffolding')
         repos = [
-            {'usr': 'jobiols', 'repo': 'cl-iomaq', 'branch': '9.0'},
-            {'usr': 'jobiols', 'repo': 'odoo-addons', 'branch': '9.0'},
-            {'usr': 'Vauxoo', 'repo': 'addons-vauxoo', 'branch': '9.0'},
-        ]
+            {'usr': 'jobiols', 'repo': 'cl-vhing', 'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'odoo-addons', 'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'rafi16jan-backend-theme',
+             'branch': '11.0'},
+
+            {'usr': 'jobiols', 'repo': 'adhoc-odoo-argentina',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-argentina-sale',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-account-financial-tools',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-account-payment',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-miscellaneous',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-argentina-reporting',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-reporting-engine',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'adhoc-aeroo_reports',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'oca-partner-contact',
+             'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'oca-web', 'branch': '11.0'},
+            {'usr': 'jobiols', 'repo': 'oca-server-tools', 'branch': '11.0'}, ]
         self.assertEqual(repos, manifest.repos)
 
         docker = [
-            {'name': 'aeroo', 'usr': 'jobiols', 'img': 'aeroo-docs'},
             {'name': 'odoo', 'usr': 'jobiols', 'img': 'odoo-jeo',
-             'ver': '9.0'},
-            {'name': 'postgres', 'usr': 'postgres', 'ver': '9.5'},
-            {'name': 'nginx', 'usr': 'nginx', 'ver': 'latest'}
-        ]
+             'ver': '11.0'},
+            {'name': 'postgres', 'usr': 'postgres', 'ver': '11.1-alpine'},
+            {'name': 'nginx', 'usr': 'nginx', 'ver': 'latest'},
+            {'name': 'aeroo', 'usr': 'adhoc', 'img': 'aeroo-docs'}, ]
         self.assertEqual(docker, manifest.docker)
-        self.assertEqual('9.0', manifest.version)
-        self.assertEqual(9.0, manifest.numeric_version)
+        self.assertEqual('11.0', manifest.version)
+        self.assertEqual(11.0, manifest.numeric_version)
