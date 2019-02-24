@@ -1,0 +1,46 @@
+Muestra o modifica las opciones almacenadas
+-------------------------------------------
+
+La configuracion de oe se persiste en un archivo yaml autoadministrado.
+El archivo esta ubicado en ~/.config/oe/config.yaml
+Las opciones activas se pueden ver con el comando config
+Para modificar las opciones ver config -h
+
+Descripcion de las opciones:
+
+client
+    El nombre del cliente, es util en ambiente de desarrollo para poder tener
+    multiples instalaciones (una por cliente) en la misma maquina. Cada
+    instalacion tiene una base de datos separada. Es un parametro requerido y
+    no tiene valor por defecto.
+
+environment[dev|prod|stagging]
+    Hay tres ambientes, que se comportan distinto segun como sigue:
+
+    dev - ambiente de desarrollo
+        * Abre el puerto 5432 en el container de postgres para que se pueda
+          acceder mediante pgadmin.
+        * Saca el log de odoo por consola.
+        * Al crear la instalacion por primera vez copia los fuentes de la
+          imagen de odoo al host creando repositorios.
+        * Monta los directorios copiados desde la imagen en la misma imagen,
+          de manera que odoo corre sobre los fuentes que estan en el host.
+        * Al clonar repositorios lo hace con --depth 50
+        * Se activan los servicios DUMMY de SMTP FETCHMAIL ETC.
+
+    stagging - ambiente de pruebas
+        * Es identico a produccion salvo que se activan servicios dummy de
+          SMPT, FETCHMAIL, ETC.
+
+    prod - ambiente de produccion
+        * los contenedores estan cerrados y se conectan por links para mejorar
+          la seguridad
+        * el log de odoo va al arhcivo de log standard
+        * odoo corre sobre los fuentes instalados internamente en la imagen
+        * Al clonar los repositorios lo hace con --depth 1
+        * Se activan los servicios reales de SMTP FETCHMAIL ETC
+
+defapp
+    la aplicacion default para crear la instancia de odoo, tiene esta forma
+    https://github.com/jobiols/cl-iomaq.git
+
