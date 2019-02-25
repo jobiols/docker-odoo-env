@@ -21,10 +21,35 @@ class Config(object):
         """ Elimina todos los parametros que no se requieren, convierte a dict
         """
         args = vars(args)
-        for item in ['help']:
-            if item in args:
-                args.pop(item)
-        return args
+        # solo devuelvo los items que tienen datos en el runstring
+        ret = {}
+        for item in args:
+            if args[item]:
+                ret[item] = args[item]
+        return ret
+
+    def add_default_values(self):
+        args = self._args
+        if not args.get('database'):
+            args['database'] = args['client'] + '_prod'
+
+        if not args.get('test_database'):
+            args['test_database'] = args['client'] + '_test'
+
+        if not args.get('nginx'):
+            args['nginx'] = 'on'
+
+        if not args.get('debug'):
+            args['debug'] = 'off'
+
+        if not args.get('verbose'):
+            args['verbose'] = 'off'
+
+        if not args.get('environment'):
+            args['environment'] = 'prod'
+
+        if not args.get('image'):
+            args['image'] = 'Servira para algo esto???'
 
     @property
     def command(self):
@@ -71,10 +96,12 @@ class Config(object):
                 self._args[item] = client_config.get(item)
 
         # agregar valores por defecto si no estan definidos
-        if not self._args.get('database'):
-            self._args['database'] = self._args['client'] + '_prod'
-        if not self._args.get('test_database'):
-            self._args['test_database'] = self._args['client'] + '_test'
+        self.add_default_values()
+
+        # si aca no tengo definido la aplicacion default termino con error
+        if not self._args.get('defapp'):
+            msg.err('Need --defapp option (default application). '
+                    'Process aborted')
 
         self.save_config()
 
@@ -132,7 +159,7 @@ class Config(object):
         default_config = config[client]
 
         msg.run('Saved options for client %s' % client)
-        msg.inf('Default application (%s)' % default_config['defapp'])
+        msg.inf('Default application (%s)' % default_config.get('defapp'))
         msg.inf('environment (%s)' % default_config['environment'])
         msg.inf('databases prod (%s) test (%s)' %
                 (default_config['database'],

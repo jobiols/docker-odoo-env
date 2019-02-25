@@ -24,21 +24,17 @@ def new_config_parser(sub):
     parser.add_argument('-e',
                         dest='environment',
                         choices=['prod', 'staging', 'dev'],
-                        default='prod',
                         help='Environment where to deploy')
     parser.add_argument('-n',
                         dest='nginx',
-                        default='on',
                         choices=['on', 'off'],
                         help='Install Nginx reverse proxy')
     parser.add_argument('-v',
                         dest='verbose',
-                        default='off',
                         choices=['on', 'off'],
                         help='Verbose mode')
     parser.add_argument('-d',
                         dest='debug',
-                        default='off',
                         choices=['on', 'off'],
                         help='force restart and change debug mode')
     parser.add_argument('--database',
@@ -52,7 +48,6 @@ def new_config_parser(sub):
                         help='git path for default main application')
     parser.add_argument('--image',
                         dest='image',
-                        default='Manifest',
                         help='odoo image, overwrite the default manifest image')
 
 
