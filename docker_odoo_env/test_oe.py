@@ -15,15 +15,41 @@ class TestRepository(unittest.TestCase):
     def test_01(self):
         """ Save and restore config
         """
+        # crea el objeto config
         config = Config()
+        # borra todos los datos del config
         config.clear()
 
-        config.args = argparse.Namespace(client='scaffolding', dos=2)
+        # equivale a ponerle parametros  -c scaffolding
+        config.args = argparse.Namespace(client='scaffolding',
+                                         environment='prod',
+                                         nginx='on',
+                                         verbose='off',
+                                         debug='off')
         data = config.args
 
         self.assertEqual(data.get('client'), 'scaffolding')
         self.assertEqual(data.get('database'), 'scaffolding_prod')
         self.assertEqual(data.get('test_database'), 'scaffolding_test')
+        self.assertEqual(data.get('environment'), 'prod')
+        self.assertEqual(data.get('nginx'), 'on')
+        self.assertEqual(data.get('verbose'), 'off')
+        self.assertEqual(data.get('debug'), 'off')
+
+        config = Config()
+        config.args = argparse.Namespace(client='client_test_01',
+                                         environment='staging',
+                                         nginx='off',
+                                         verbose='on',
+                                         debug='on')
+        data = config.args
+        self.assertEqual(data.get('client'), 'client_test_01')
+        self.assertEqual(data.get('database'), 'client_test_01_prod')
+        self.assertEqual(data.get('test_database'), 'client_test_01_test')
+        self.assertEqual(data.get('environment'), 'staging')
+        self.assertEqual(data.get('nginx'), 'off')
+        self.assertEqual(data.get('verbose'), 'on')
+        self.assertEqual(data.get('debug'), 'on')
 
     def test_02(self):
         """ Test config command

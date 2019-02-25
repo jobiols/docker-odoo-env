@@ -16,7 +16,7 @@ def new_config_parser(sub):
 
     parser.add_argument('--doc',
                         action='store_true',
-                        help='Documentation')
+                        help='show extended documentation and exit')
 
     parser.add_argument('-c',
                         dest='client',
@@ -24,7 +24,7 @@ def new_config_parser(sub):
     parser.add_argument('-e',
                         dest='environment',
                         choices=['prod', 'staging', 'dev'],
-                        default='production',
+                        default='prod',
                         help='Environment where to deploy')
     parser.add_argument('-n',
                         dest='nginx',
@@ -53,7 +53,7 @@ def new_config_parser(sub):
     parser.add_argument('--image',
                         dest='image',
                         default='Manifest',
-                        help='odoo image, ovewrite the default manifest image')
+                        help='odoo image, overwrite the default manifest image')
 
 
 def new_update_parser(sub):
@@ -61,7 +61,7 @@ def new_update_parser(sub):
                             help='creates or updates an installation.')
     parser.add_argument('--doc',
                         action='store_true',
-                        help='Documentation')
+                        help='show extended documentation and exits')
     parser.add_argument('-r',
                         action='store_true',
                         help='Restart server')
