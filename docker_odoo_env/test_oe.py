@@ -25,7 +25,8 @@ class TestRepository(unittest.TestCase):
                                          environment='prod',
                                          nginx='on',
                                          verbose='off',
-                                         debug='off')
+                                         debug='off',
+                                         defapp='http://github.com')
         data = config.args
 
         self.assertEqual(data.get('client'), 'scaffolding')
@@ -41,7 +42,8 @@ class TestRepository(unittest.TestCase):
                                          environment='staging',
                                          nginx='off',
                                          verbose='on',
-                                         debug='on')
+                                         debug='on',
+                                         defapp='http://github.com')
         data = config.args
         self.assertEqual(data.get('client'), 'client_test_01')
         self.assertEqual(data.get('database'), 'client_test_01_prod')
