@@ -1,7 +1,51 @@
 Actualiza o crea una instalación de Odoo
 ----------------------------------------
 
-La opción update crea o actualiza una instalación de odoo según en que ambiente
-se encuentre.
+Si nunca se instalo la default app que esta en configuracion creara la
+instalacion generando primero el arbol de directorios.
 
-ver update -h para mas opciones
+/odoo
+├── odoo-9.0
+│   ├── client_one
+│   │    ├── config             odoo.conf
+│   │    ├── data_dir           filestore
+│   │    ├── backup_dir         zip files with backups
+│   │    ├── log                odoo.log
+│   │    ├── postgresql         postgres database
+│   │    └── sources            custom sources
+│   ├── client_two
+│   │    ├── config             odoo.conf
+│   │    ├── data_dir           filestore
+│   │    ├── backup_dir         zip files with backups
+│   │    ├── log                odoo.log
+│   │    ├── postgresql         postgres database
+│   │    └── sources            custom sources
+│   ├── extra-addons            repos from image for debug
+│   ├── dist-local-packages     packages from image for debug
+│   └── dist-packages           pagkages from image for debug
+└── nginx
+    ├── conf
+    ├── log
+    └── cert
+
+Una vez creada la rama del arbol de directorios que corresponde a la aplicacion
+default seleccionada, se procede como sigue:
+
+1-  Se descargan todos los repositorios que estan definidos en el manifest, si
+    existen se actualizan y si no existen se clonan, el clonado puede ser de
+    tipo http o ssh segun los repos esten publicos o privados. Ver descripcion
+    de la extension del manifiesto para la sintaxis de repositorios.
+2-  Se descargan las imagenes o se actualizan si ya estan descargadas.
+3-  Se genera el odoo.conf con parametros que dependeran del ambiente
+4-  Se levantan contenedores de base de datos y aeroo
+5-  Se actualiza la aplicacion default y se hace update all dos veces.
+6-  Se levanta el contenedor de odoo
+
+Opciones adicionales
+
+--doc
+    Se muestra este archivo
+-r
+    Solo reinicia el contenedor de odoo
+-q
+    Quick mode, se saltea pasos 1, 2, y 3

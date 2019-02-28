@@ -1,0 +1,24 @@
+Restaurar
+---------
+
+Restaura un archivo de base de datos en la base de datos por defecto
+definida en configuracion
+
+-r filename
+    Nombre de archivo a restaurar, si se omite, se hara un restore del archivo
+    de fecha mas nueva encontrado
+
+
+-R user@host filename
+    idem anterior pero restaura un archivo que se encuentra en otro host, si
+    se omite filename restaura el archivo mas nuevo encontrado en en host
+    remoto. Si se omiten el primer parametro se accede al host remoto definido
+    en configuracion.
+
+NOTA:
+Para utilizar la opcion -R debe existir una clave SSH que permita el acceso al
+host remoto y debe haber una configuracion en el archivo ~/.ssh/config de
+manera que ssh usr@host pueda acceder al server remoto.
+
+Los archivos de backup se buscan en el directorio de backups del arbol de
+directorios ya sea en el host local o remoto

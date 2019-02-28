@@ -4,9 +4,9 @@ docker odoo environment manual
 **Generalidades**
 
 oe (odoo environment) es una utilidad para manejar ambientes dockerizados 
-de odoo. Permite crear una instalacion de cero en un VPS virgen, con 
-extrema facilidad, ademas maneja ambientes de desarrollo y staging
-las unicas dependencias necesarias son python (v2 o v3) y git.
+de odoo. Permite crear una instalacion desde cero en un VPS virgen, con 
+extrema facilidad, ademas maneja ambientes de desarrollo y test
+las unicas dependencias necesarias son python (v2 o v3), git y docker.
 
 **oe config** Muestra o modifica las opciones almacenadas
 oe mantiene un archivo yaml con la configuracion, de manera que cuando
@@ -23,9 +23,9 @@ una descripcion de cada una.
             cliente) en la misma maquina. Es requerido en produccion 
             aunque habra un solo cliente solo por compatibilidad con 
             el ambiente de desarrollo.
-            DEFAULT None (se requiere un valor)
-    --environment[development|production|stagging] 
-            Si esta en development produce lo siguiente:
+
+    --environment[dev|prod|staging] 
+            Si esta en dev produce lo siguiente:
                 1. Abre el puerto 5432 en el container de postgres
                    para que se pueda acceder mediante pgadmin.
                 2. Saca el log de odoo por consola.
@@ -38,22 +38,25 @@ una descripcion de cada una.
                 6. Se activan los servicios DUMMY de SMTP FETCHMAIL ETC.
             Si esta en stagging produce lo siguiente
                 1. Se activan los servicios DUMMY de SMTP FETCHMAIL ETC.
-            Si esta en production 
-            DEFAULT production
+            Si esta en production
+                1. Todos los puertos cerrados para maxima seguridad
+                2. Instala nginx
+                3. Al clonar repositorios pone --depth 1
+
     --nginx[on|off] instala nginx para acceder a odoo por los puertos 80
             y 8072 
-            DEFAULT off
+
     --verbose[on|off] enciende el modo verborragico mostrando los comandos
             que envia a docker con pretty print.
-            DEFAULT off
+
     --database base-de-datos base de datos activa
-            DEFAULT nombre-cliente_prod
+
     --defapp git-path-to-client-app
-            es la url al repo del cliente por defecto
+
     --odoo-image user/image:tag
             Esta opcion sobreescribe la imagen que viene en el manifiesto
             se considera solo cuando estoy en desarrollo
-            DEFAULT None
+            DEFAULT Manifest Image
 
 **oe update**  Instala o actualiza una instalación
 

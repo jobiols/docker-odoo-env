@@ -89,10 +89,21 @@ def new_restore_parser(sub):
     parser = sub.add_parser('restore',
                             help='restores a database from backup_dir')
 
+    parser.add_argument('--doc',
+                        action='store_true',
+                        help='show extended documentation and exit')
+
     parser.add_argument('-r',
-                        dest='database',
+                        dest='database_file',
                         help='Database file to restore, if ommited, last '
                              'backup found in backup_dir will be restored')
+
+    parser.add_argument('-R',
+                        nargs='+',
+                        dest='remote_database_file',
+                        help='Remote host and Database file to restore, if '
+                             'Database ommited, last backup found in '
+                             'backup_dir will be restored')
 
 
 def new_qa_parser(sub):

@@ -13,7 +13,7 @@ Si se ejecuta config sin parametros muestra la configuracion para el cliente
 por defecto, y los nombres de los demas clientes.
 
 
-client
+-c client
     Es un codigo que identifica un proyecto de cliente, el resto de las opciones
     seran validas solo para este cliente, si se cambia el cliente cambiaran el
     resto de las opciones para el nuevo cliente.
@@ -24,11 +24,11 @@ client
     ambiente de test donde pueden coexistir instancias de multiples clientes
     corriendo al mismo tiempo incluso de versiones diferentes de odoo.
 
-defapp
+--defapp Default Application
     Es la url al repositorio donde esta alojada la aplicacion por defecto para
     crear la instancia de odoo.
 
-environment[dev|prod|stagging]
+-e [dev|prod|stagging]
     Hay tres ambientes, que se comportan distinto a saber:
 
     dev - ambiente de desarrollo
@@ -45,8 +45,28 @@ environment[dev|prod|stagging]
         * Es identico a produccion
 
     prod - ambiente de produccion
-        * los contenedores estan cerrados y se conectan por links para mejorar
+        * Los contenedores estan cerrados y se conectan por links para mejorar
           la seguridad
-        * el log de odoo va al archivo de log standard.
-        * odoo corre sobre los fuentes instalados internamente en la imagen
+        * El log de odoo va al archivo de log standard.
+        * Odoo corre sobre los fuentes instalados internamente en la imagen
         * Al clonar los repositorios lo hace con --depth 1
+
+--nginx[on|off]
+        instala nginx para acceder a odoo por los puertos 80 y 8072
+
+--verbose[on|off] enciende el modo verborragico mostrando los comandos que
+        envia a docker con pretty print.
+
+--database
+        base-de-datos base de datos activa
+
+--test-database
+        base-de-datos base de datos de test
+
+--defapp
+        Url al repositorio donde esta la default app.
+
+--odoo-image user/image:tag
+        Esta opcion sobreescribe la imagen que viene en el manifiesto se
+        considera solo cuando estoy en desarrollo, por defecto dice
+        Manifest Image y significa que usara la que esta en el manifiesto.

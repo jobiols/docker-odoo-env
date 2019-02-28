@@ -9,4 +9,3 @@ class OdooConfCommand(Command):
     def execute(self):
         if self._config.args.get('doc'):
             self.show_doc()
-

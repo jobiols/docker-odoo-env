@@ -49,7 +49,7 @@ class Config(object):
             args['environment'] = 'prod'
 
         if not args.get('image'):
-            args['image'] = 'Servira para algo esto???'
+            args['image'] = 'Manifest Image'
 
     @property
     def command(self):
