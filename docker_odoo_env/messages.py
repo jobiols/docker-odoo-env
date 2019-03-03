@@ -53,3 +53,5 @@ class Msg():
                     print(self._yellow(line.strip('\n')))
         except Exception:
             pass
+
+msg = Msg()

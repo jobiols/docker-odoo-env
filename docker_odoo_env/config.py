@@ -9,7 +9,7 @@ msg = Msg()
 USER_CONFIG_PATH = os.path.expanduser('~') + '/.config/oe/'
 USER_CONFIG_FILE = USER_CONFIG_PATH + 'config.yaml'
 BASE_DIR = '/odoo_testing/'
-
+EPHEMERAL_PARAMETERS = ['doc', 'command', 'client', 'database_file']
 
 class Config(object):
     def __init__(self):
@@ -107,7 +107,7 @@ class Config(object):
 
     def save_config(self):
         """ Salvar la configuracion que esta en self._args para el cliente
-            para el cliente correspondiente.
+            correspondiente.
         """
         if not os.path.exists(USER_CONFIG_PATH):
             os.makedirs(USER_CONFIG_PATH)
@@ -120,7 +120,7 @@ class Config(object):
 
         # ciertos parametros no se tienen que salvar
         args = self._args.copy()
-        for item in ['doc', 'command', 'client']:
+        for item in EPHEMERAL_PARAMETERS:
             if item in args:
                 args.pop(item)
 
