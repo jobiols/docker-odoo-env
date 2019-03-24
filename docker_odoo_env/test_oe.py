@@ -2,23 +2,23 @@
 
 import unittest
 from docker_odoo_env.commands.config_command import ConfigCommand
-from docker_odoo_env.commands.update_command import UpdateCommand
-from docker_odoo_env.call import call
+from docker_odoo_env.commands.pull_command import PullCommand
+from docker_odoo_env.commands.odoo_conf_command import OdooConfCommand
 from docker_odoo_env.config import conf_
 from docker_odoo_env.commands.directory_hierarchy_command import \
     DirectoryHierarchyCommand
 from docker_odoo_env.config import OdooManifest
 import argparse
-import os
 
 
 class TestRepository(unittest.TestCase):
+    def setUp(self):
+        # cambiar el base dir para que no rompa las cosas en mi maquina.
+        conf_.base_dir = '/odoo_test/'
+
     def test_01(self):
         """ Save and restore config
         """
-        # borra todos los datos del config
-        conf_.clear()
-
         # equivale a ponerle parametros  -c scaffolding
         conf_.args = argparse.Namespace(client='scaffolding',
                                         environment='prod',
@@ -81,7 +81,6 @@ class TestRepository(unittest.TestCase):
     def test_03(self):
         """ Test config command
         """
-
         # ejecutar el comando config, tiene que mostrar la configuracion del
         # cliente client_test_01
         config_command = ConfigCommand()
@@ -100,7 +99,8 @@ class TestRepository(unittest.TestCase):
         hierarchy.execute()
 
     def test_05(self):
-        """Testear bajada en produccion"""
+        """Testear backup
+        """
 
         # borrar la estructura de directorios en disco
         import shutil
@@ -109,8 +109,32 @@ class TestRepository(unittest.TestCase):
         # configurar el cliente scaffolding
         conf_.args['client'] = 'scaffolding'
         conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
-        conf_.args['environment'] = 'prod'
 
-        # ejecutar comando update
-        update_command = UpdateCommand()
-        update_command.execute()
+        # ejecutar comando backup
+        from docker_odoo_env.commands.update_command import BackupCommand
+        backup_command = BackupCommand()
+        backup_command.execute()
+
+def test_06(self):
+    """ Testear bajada de imagenes de memoria
+    """
+    # configurar el cliente scaffolding
+    conf_.args['client'] = 'scaffolding'
+    conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
+
+    # Baja todas las imagenes docker (si estan activas)
+    from docker_odoo_env.commands.docker_down_command import DockerDownCommand
+    command = DockerDownCommand()
+    command.execute()
+
+def test_07(self):
+    """  hace clone o pull de todos los repos y las imagenes
+    """
+    command = PullCommand()
+    command.execute()
+
+def test_08(self):
+    """ crea, actualiza el odoo.conf, segun en que ambiente estemos
+    """
+    command = OdooConfCommand()
+    command.execute()

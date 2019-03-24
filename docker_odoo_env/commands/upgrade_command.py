@@ -5,6 +5,7 @@ from docker_odoo_env.commands.command import Command
 from docker_odoo_env.config import conf_
 from docker_odoo_env.messages import msg
 from docker_odoo_env.call import call
+import os
 
 
 class UpgradeCommand(Command):
@@ -19,9 +20,5 @@ class UpgradeCommand(Command):
 
         # Baja las imagenes de docker
         for img in conf_.manifest.docker_images:
-            command = 'sudo docker pull '+img['img']
+            command = 'sudo docker pull ' + img['img']
             call(command)
-
-        # Baja los repositorios
-        for rep in conf_.manifest.git_repos:
-            pass

@@ -60,5 +60,5 @@ class UpdateCommand(Command):
         command.execute()
 
         # levanta todas las imagenes finales
-        command = DockerUpCommand(conf_)
+        command = DockerUpCommand()
         command.execute()

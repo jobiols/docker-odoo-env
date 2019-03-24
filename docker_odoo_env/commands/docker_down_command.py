@@ -11,6 +11,6 @@ class DockerDownCommand(Command):
         if conf_.args.get('doc'):
             self.show_doc()
 
-    # bajar todas las imagenes docker que esten activas
-    command = 'sudo docker rmi $(sudo docker images -q)'
-    call(command)
+        # bajar todas las imagenes docker que esten activas
+        command = 'sudo docker rm -f $(sudo docker ps -a -q)'
+        call(command)

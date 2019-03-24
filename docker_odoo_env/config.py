@@ -9,7 +9,7 @@ import shutil
 
 USER_CONFIG_PATH = os.path.expanduser('~') + '/.config/oe/'
 USER_CONFIG_FILE = USER_CONFIG_PATH + 'config.yaml'
-BASE_DIR = '/odoo_testing/'
+BASE_DIR = '/odoo_adhoc/'
 EPHEMERAL_PARAMETERS = ['doc', 'command', 'client', 'database_file']
 
 
