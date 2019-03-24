@@ -31,7 +31,6 @@ class OdooManifest(object):
             return manifest
 
         tmpdir = tempfile.mkdtemp()
-
         try:
             # si no lo encuentra bajar la app default y leerlo de ahi
             command = 'git -C {} clone --depth 1 {} tmp'.format(
@@ -66,22 +65,24 @@ class OdooManifest(object):
         return False
 
     @property
-    def repos(self):
-        ret = self._manifest.get('repositories')
+    def git_repos(self):
+        ret = self._manifest.get('git-repos')
         if not ret:
             msg.err('Manifest has no repositories')
         return ret
 
     @property
-    def docker(self):
-        ret = self._manifest['images']
+    def docker_images(self):
+        ret = self._manifest.get('docker-images')
         if not ret:
             msg.err('Manifest has no images')
-        return
+        return ret
 
     @property
     def version(self):
         ver = self._manifest['version']
+        if not ver:
+            msg.err('Manifest has no version')
         # encontrar primer punto
         pos = ver.find('.') + 1
         # encontrar segundo punto
@@ -95,7 +96,11 @@ class OdooManifest(object):
 
     @property
     def Enterprise(self):
-        return self._manifest['enterprise']
+        ver = self._manifest.get('enterprise')
+        if not ver:
+            msg.err('Manifest has no Enterprise')
+        else:
+            return ver
 
     @staticmethod
     def load_manifest(filename):
@@ -290,5 +295,6 @@ class Config(object):
     def clear(self):
         self._args = {'client': 'none'}
         self.save_config()
+
 
 conf_ = Config()

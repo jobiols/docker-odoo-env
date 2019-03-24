@@ -33,7 +33,7 @@ class UpdateCommand(Command):
         # Si no estoy en desarrollo, intenta hacer un backup de la base de
         # datos activa, podria no haber base si es la primera instalacion.
         if conf_.args.get('environment') not in ['dev']:
-            command = BackupCommand(conf_)
+            command = BackupCommand()
             command.execute()
 
         # Baja todas las imagenes docker (si estan activas)
@@ -43,20 +43,20 @@ class UpdateCommand(Command):
         # Si no estoy en desarrollo verifica las dependencias en el servidor y
         # las instala o actualiza (apt-get update y docker)
         if conf_.args.get('environment') not in ['dev']:
-            command = UpgradeCommand(conf_)
+            command = UpgradeCommand()
             command.execute()
 
         # hace clone o pull de todos los repos y las imagenes
-        command = PullCommand(conf_)
+        command = PullCommand()
         command.execute()
 
         # crea, actualiza el odoo.conf, segun en que ambiente estemos
-        command = OdooConfCommand(conf_)
+        command = OdooConfCommand()
         command.execute()
 
         # hace un update all dos veces (filtrando mensajes info)
         # instala o si esta instalada, actualiza la aplicacion por defecto
-        command = UpdateAll(conf_)
+        command = UpdateAll()
         command.execute()
 
         # levanta todas las imagenes finales

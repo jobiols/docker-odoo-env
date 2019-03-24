@@ -21,11 +21,11 @@ class TestRepository(unittest.TestCase):
 
         # equivale a ponerle parametros  -c scaffolding
         conf_.args = argparse.Namespace(client='scaffolding',
-                                         environment='prod',
-                                         nginx='on',
-                                         verbose='off',
-                                         debug='off',
-                                         defapp='https://github.com/jobiols/cl-scaffolding.git')
+                                        environment='prod',
+                                        nginx='on',
+                                        verbose='off',
+                                        debug='off',
+                                        defapp='https://github.com/jobiols/cl-scaffolding.git')
         data = conf_.args
 
         self.assertEqual(data.get('client'), 'scaffolding')
@@ -37,11 +37,11 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(data.get('debug'), 'off')
 
         conf_.args = argparse.Namespace(client='client_test_01',
-                                         environment='staging',
-                                         nginx='off',
-                                         verbose='on',
-                                         debug='on',
-                                         defapp='http://github.com')
+                                        environment='staging',
+                                        nginx='off',
+                                        verbose='on',
+                                        debug='on',
+                                        defapp='http://github.com')
         data = conf_.args
         self.assertEqual(data.get('client'), 'client_test_01')
         self.assertEqual(data.get('database'), 'client_test_01_prod')
@@ -52,84 +52,65 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(data.get('debug'), 'on')
 
     def test_02(self):
+        """ Chequear manifest
+        """
+        conf_.args = argparse.Namespace(client='scaffolding',
+                                        environment='prod',
+                                        nginx='on',
+                                        verbose='off',
+                                        debug='off',
+                                        defapp='https://github.com/jobiols/cl-scaffolding.git')
+        manifest = OdooManifest(conf_)
+        repos = [
+            'https://github.com/jobiols/cl-scaffolding.git',
+            'https://github.com/jobiols/odoo-addons.git',
+            'https://github.com/jobiols/adhoc-odoo-argentina.git'
+        ]
+        self.assertEqual(repos, manifest.git_repos)
+
+        docker = [
+            {'img': 'jobiols/odoo-jeo:11.0', 'name': 'odoo'},
+            {'img': 'postgres:11.1-alpine', 'name': 'postgres'},
+            {'img': 'adhoc/aeroo', 'name': 'aeroo'}
+        ]
+        _ = manifest.docker_images
+        self.assertEqual(docker, _)
+        self.assertEqual('11.0', manifest.version)
+        self.assertEqual(11.0, manifest.numeric_version)
+
+    def test_03(self):
         """ Test config command
         """
 
         # ejecutar el comando config, tiene que mostrar la configuracion del
         # cliente client_test_01
-        config_command = ConfigCommand(conf_)
+        config_command = ConfigCommand()
         config_command.execute()
-
-    def test_03(self):
-
-        config = conf_
-        # borrar la estructura de directorios en disco
-        command = 'sudo rm -r {}'.format(config.base_dir)
-        call(command)
-
-        # configurar el cliente scaffolding
-        config.args['client'] = 'scaffolding'
-        config.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
-
-        # ejecutar comando update
-        update_command = UpdateCommand(config)
-        update_command.execute()
 
     def test_04(self):
         """ Create hierarchy
         """
-        config = conf_
-        config._base_dir = os.path.expanduser('~/') + 'odoo_test/'
-
+        # borrar la estructura de directorios en disco
         import shutil
-        if os.path.isdir(config._base_dir):
-            shutil.rmtree(config._base_dir)
+        shutil.rmtree(conf_.base_dir, ignore_errors=True)
 
-        config.args['client'] = 'scaffolding'
-        config.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
-        hierarchy = DirectoryHierarchyCommand(config)
+        conf_.args['client'] = 'scaffolding'
+        conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
+        hierarchy = DirectoryHierarchyCommand()
         hierarchy.execute()
 
     def test_05(self):
-        """ Chequear manifest
-        """
-        config = conf_
-        manifest_path = config._base_dir
-        manifest = OdooManifest(manifest_path, 'scaffolding')
-        repos = [
-            {'usr': 'jobiols', 'repo': 'cl-scaffolding', 'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'odoo-addons', 'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'rafi16jan-backend-theme',
-             'branch': '11.0'},
+        """Testear bajada en produccion"""
 
-            {'usr': 'jobiols', 'repo': 'adhoc-odoo-argentina',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-argentina-sale',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-account-financial-tools',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-account-payment',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-miscellaneous',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-argentina-reporting',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-reporting-engine',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'adhoc-aeroo_reports',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'oca-partner-contact',
-             'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'oca-web', 'branch': '11.0'},
-            {'usr': 'jobiols', 'repo': 'oca-server-tools', 'branch': '11.0'}, ]
-        self.assertEqual(repos, manifest.repos)
+        # borrar la estructura de directorios en disco
+        import shutil
+        shutil.rmtree(conf_.base_dir, ignore_errors=True)
 
-        docker = [
-            {'name': 'odoo', 'usr': 'jobiols', 'img': 'odoo-jeo',
-             'ver': '11.0'},
-            {'name': 'postgres', 'usr': 'postgres', 'ver': '11.1-alpine'},
-            {'name': 'nginx', 'usr': 'nginx', 'ver': 'latest'},
-            {'name': 'aeroo', 'usr': 'adhoc', 'img': 'aeroo-docs'}, ]
-        self.assertEqual(docker, manifest.docker)
-        self.assertEqual('11.0', manifest.version)
-        self.assertEqual(11.0, manifest.numeric_version)
+        # configurar el cliente scaffolding
+        conf_.args['client'] = 'scaffolding'
+        conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
+        conf_.args['environment'] = 'prod'
+
+        # ejecutar comando update
+        update_command = UpdateCommand()
+        update_command.execute()
