@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from docker_odoo_env.config import Config
 from docker_odoo_env.commands.config_command import ConfigCommand
 from docker_odoo_env.commands.update_command import UpdateCommand
+from docker_odoo_env.call import call
+from docker_odoo_env.config import conf_
 from docker_odoo_env.commands.directory_hierarchy_command import \
     DirectoryHierarchyCommand
-from docker_odoo_env.commands.directory_hierarchy_command import OdooManifest
+from docker_odoo_env.config import OdooManifest
 import argparse
 import os
 
@@ -15,19 +16,17 @@ class TestRepository(unittest.TestCase):
     def test_01(self):
         """ Save and restore config
         """
-        # crea el objeto config
-        config = Config()
         # borra todos los datos del config
-        config.clear()
+        conf_.clear()
 
         # equivale a ponerle parametros  -c scaffolding
-        config.args = argparse.Namespace(client='scaffolding',
+        conf_.args = argparse.Namespace(client='scaffolding',
                                          environment='prod',
                                          nginx='on',
                                          verbose='off',
                                          debug='off',
-                                         defapp='http://github.com')
-        data = config.args
+                                         defapp='https://github.com/jobiols/cl-scaffolding.git')
+        data = conf_.args
 
         self.assertEqual(data.get('client'), 'scaffolding')
         self.assertEqual(data.get('database'), 'scaffolding_prod')
@@ -37,14 +36,13 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(data.get('verbose'), 'off')
         self.assertEqual(data.get('debug'), 'off')
 
-        config = Config()
-        config.args = argparse.Namespace(client='client_test_01',
+        conf_.args = argparse.Namespace(client='client_test_01',
                                          environment='staging',
                                          nginx='off',
                                          verbose='on',
                                          debug='on',
                                          defapp='http://github.com')
-        data = config.args
+        data = conf_.args
         self.assertEqual(data.get('client'), 'client_test_01')
         self.assertEqual(data.get('database'), 'client_test_01_prod')
         self.assertEqual(data.get('test_database'), 'client_test_01_test')
@@ -56,21 +54,31 @@ class TestRepository(unittest.TestCase):
     def test_02(self):
         """ Test config command
         """
-        config = Config()
-        config_command = ConfigCommand(config)
+
+        # ejecutar el comando config, tiene que mostrar la configuracion del
+        # cliente client_test_01
+        config_command = ConfigCommand(conf_)
         config_command.execute()
 
     def test_03(self):
-        config = Config()
+
+        config = conf_
+        # borrar la estructura de directorios en disco
+        command = 'sudo rm -r {}'.format(config.base_dir)
+        call(command)
+
+        # configurar el cliente scaffolding
         config.args['client'] = 'scaffolding'
         config.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
+
+        # ejecutar comando update
         update_command = UpdateCommand(config)
         update_command.execute()
 
     def test_04(self):
         """ Create hierarchy
         """
-        config = Config()
+        config = conf_
         config._base_dir = os.path.expanduser('~/') + 'odoo_test/'
 
         import shutil
@@ -85,9 +93,8 @@ class TestRepository(unittest.TestCase):
     def test_05(self):
         """ Chequear manifest
         """
-        manifest_path = os.path.expanduser(
-            '~/') + 'odoo_test/.scaffolding_default/scaffolding_default'
-
+        config = conf_
+        manifest_path = config._base_dir
         manifest = OdooManifest(manifest_path, 'scaffolding')
         repos = [
             {'usr': 'jobiols', 'repo': 'cl-scaffolding', 'branch': '11.0'},

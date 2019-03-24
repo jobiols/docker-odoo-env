@@ -2,15 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 
 from docker_odoo_env.commands.command import Command
-import subprocess
-from docker_odoo_env.messages import Msg
-
-msg = Msg()
+from docker_odoo_env.config import conf_
+from docker_odoo_env.messages import msg
 
 
 class UpgradeCommand(Command):
     def execute(self):
-        if self._config.args.get('doc'):
+        if conf_.args.get('doc'):
             self.show_doc()
 
         msg.inf('Updating Server')

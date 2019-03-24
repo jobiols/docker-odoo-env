@@ -10,56 +10,55 @@ from docker_odoo_env.commands.odoo_conf_command import OdooConfCommand
 from docker_odoo_env.commands.docker_up_command import DockerUpCommand
 from docker_odoo_env.commands.update_all import UpdateAll
 from docker_odoo_env.commands.directory_hierarchy_command import DirectoryHierarchyCommand
-from docker_odoo_env.messages import Msg
-
-msg = Msg()
+from docker_odoo_env.messages import msg
+from docker_odoo_env.config import conf_
 
 
 class UpdateCommand(Command):
 
     def execute(self):
-        if not self._config.args.get('client'):
+        if not conf_.args.get('client'):
             msg.err('Must define a client')
-        if not self._config.args.get('defapp'):
+        if not conf_.args.get('defapp'):
             msg.err('Must define a default application')
 
-        if self._config.args.get('doc'):
+        if conf_.args.get('doc'):
             self.show_doc()
 
         # Testear si esta creada la estructura de directorios y crearla si no
         # existe
-        command = DirectoryHierarchyCommand(self._config)
+        command = DirectoryHierarchyCommand()
         command.execute()
 
         # Si no estoy en desarrollo, intenta hacer un backup de la base de
         # datos activa, podria no haber base si es la primera instalacion.
-        if self._config.args.get('environment') not in ['dev']:
-            command = BackupCommand(self._config)
+        if conf_.args.get('environment') not in ['dev']:
+            command = BackupCommand(conf_)
             command.execute()
 
         # Baja todas las imagenes docker (si estan activas)
-        command = DockerDownCommand(self._config)
+        command = DockerDownCommand(conf_)
         command.execute()
 
         # Si no estoy en desarrollo verifica las dependencias en el servidor y
         # las instala o actualiza (apt-get update y docker)
-        if self._config.args.get('environment') not in ['dev']:
-            command = UpgradeCommand(self._config)
+        if conf_.args.get('environment') not in ['dev']:
+            command = UpgradeCommand(conf_)
             command.execute()
 
-        # hace pull de todos los repos y las imagenes
-        command = PullCommand(self._config)
+        # hace clone o pull de todos los repos y las imagenes
+        command = PullCommand(conf_)
         command.execute()
 
         # crea, actualiza el odoo.conf, segun en que ambiente estemos
-        command = OdooConfCommand(self._config)
+        command = OdooConfCommand(conf_)
         command.execute()
 
         # hace un update all dos veces (filtrando mensajes info)
         # instala o si esta instalada, actualiza la aplicacion por defecto
-        command = UpdateAll(self._config)
+        command = UpdateAll(conf_)
         command.execute()
 
         # levanta todas las imagenes finales
-        command = DockerUpCommand(self._config)
+        command = DockerUpCommand(conf_)
         command.execute()

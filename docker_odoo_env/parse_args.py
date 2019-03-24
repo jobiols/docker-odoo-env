@@ -2,12 +2,8 @@
 from __future__ import print_function
 import argparse
 from docker_odoo_env import __version__, __name__
-from docker_odoo_env.messages import Msg
 import importlib
-from docker_odoo_env.config import Config
-
-msg = Msg()
-config = Config()
+from docker_odoo_env.config import conf_
 
 
 def new_config_parser(sub):
@@ -143,10 +139,10 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
     new_qa_parser(subparser)
 
     # obtengo los comandos del runstring, y los salvo en config
-    config.args = parser.parse_args()
+    conf_.args = parser.parse_args()
 
-    if config.command:
-        name = config.command
+    if conf_.command:
+        name = conf_.command
 
         # importar el modulo correspondiente al comando
         module = __name__ + '.commands.' + name + '_command'
@@ -154,7 +150,7 @@ Odoo Environment {} - by jeo Software <jorge.obiols@gmail.com>
 
         # instanciar la clase correspondiente al comando
         driverClass = getattr(command_module, name.capitalize() + "Command")
-        command = driverClass(config)
+        command = driverClass()
 
         # ejecutar el comando
         command.execute()

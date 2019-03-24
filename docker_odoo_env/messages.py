@@ -47,11 +47,28 @@ class Msg():
     def text(self, docfile):
         filepath = os.path.dirname(os.path.realpath(__file__))
         filename = filepath + '/doc/' + docfile + '.txt'
-        try:
-            with open(filename, 'r') as doc:
-                for line in doc:
-                    print(self._yellow(line.strip('\n')))
-        except Exception:
-            pass
+        with open(filename, 'r') as doc:
+            for line in doc:
+                print(self._yellow(line.strip('\n')))
+
+    def show(self, client, config):
+
+        self.run('Saved configuration for default client\n')
+        client = client.upper()
+        version = config.get('version')
+        type = 'EE' if config.get('enterprise') else 'CE'
+        defapp = config['defapp']
+        print('--{}-- v{} {}  ({})'.format(client, version, type, defapp))
+
+        print('DATABASES: Production -> ({}) Test'
+              ' -> ({})'.format(config['database'],
+                                config['test_database']))
+        print('Odoo Image -> ({})'.format(config['image']))
+        print('Environment -> ({}) Nginx -> ({}) '
+              'Debug -> ({}) Verbose -> ({})'.format(
+            config['environment'],
+            config['nginx'],
+            config['debug'],
+            config['verbose']))
 
 msg = Msg()
