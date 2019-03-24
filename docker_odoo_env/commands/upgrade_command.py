@@ -4,6 +4,7 @@
 from docker_odoo_env.commands.command import Command
 from docker_odoo_env.config import conf_
 from docker_odoo_env.messages import msg
+from docker_odoo_env.call import call
 
 
 class UpgradeCommand(Command):
@@ -11,22 +12,16 @@ class UpgradeCommand(Command):
         if conf_.args.get('doc'):
             self.show_doc()
 
+        # Actualizar el sistema operativo
         msg.inf('Updating Server')
+        command = 'sudo apt-get update && sudo apt-get upgrade -y'
+        call(command)
 
-        """
-        from subprocess import Popen, PIPE
-        import getpass
-        # Actualizar instalacion
+        # Baja las imagenes de docker
+        for img in conf_.manifest.docker_images:
+            command = 'sudo docker pull '+img['img']
+            call(command)
 
-        command = 'docker -v'.split()
-        p = Popen(['sudo', '-S'] + command,
-                  stdin=PIPE, stdout=PIPE, stderr=PIPE,
-                  universal_newlines=True)
-        passw = getpass.getpass('')
-        sudo_prompt = p.communicate(passw+'\n')
-
-        print(sudo_prompt[0])
-
-        """
-        command = 'sudo docker -v'
-        #subprocess.call(command, shell=True)
+        # Baja los repositorios
+        for rep in conf_.manifest.git_repos:
+            pass

@@ -37,7 +37,7 @@ class UpdateCommand(Command):
             command.execute()
 
         # Baja todas las imagenes docker (si estan activas)
-        command = DockerDownCommand(conf_)
+        command = DockerDownCommand()
         command.execute()
 
         # Si no estoy en desarrollo verifica las dependencias en el servidor y

@@ -2,12 +2,15 @@
 # For copyright and license notices, see __manifest__.py file in module root
 
 from docker_odoo_env.commands.command import Command
+from docker_odoo_env.call import call
+from docker_odoo_env.config import conf_
 
 
 class DockerDownCommand(Command):
-    def __init__(self, config):
-        self._config = config
-
     def execute(self):
-        if self._config.args.get('doc'):
+        if conf_.args.get('doc'):
             self.show_doc()
+
+    # bajar todas las imagenes docker que esten activas
+    command = 'sudo docker rmi $(sudo docker images -q)'
+    call(command)
