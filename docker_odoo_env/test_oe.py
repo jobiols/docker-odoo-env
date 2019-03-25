@@ -49,7 +49,7 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(data.get('environment'), 'staging')
         self.assertEqual(data.get('nginx'), 'off')
         self.assertEqual(data.get('verbose'), 'on')
-        self.assertEqual(data.get('debug'), 'of')
+        self.assertEqual(data.get('debug'), 'on')
 
     def test_02(self):
         """ Chequear manifest
