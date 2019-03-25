@@ -115,26 +115,26 @@ class TestRepository(unittest.TestCase):
         backup_command = BackupCommand()
         backup_command.execute()
 
-def test_06(self):
-    """ Testear bajada de imagenes de memoria
-    """
-    # configurar el cliente scaffolding
-    conf_.args['client'] = 'scaffolding'
-    conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
+    def test_06(self):
+        """ Testear bajada de imagenes de memoria
+        """
+        # configurar el cliente scaffolding
+        conf_.args['client'] = 'scaffolding'
+        conf_.args['defapp'] = 'https://github.com/jobiols/cl-scaffolding.git'
 
-    # Baja todas las imagenes docker (si estan activas)
-    from docker_odoo_env.commands.docker_down_command import DockerDownCommand
-    command = DockerDownCommand()
-    command.execute()
+        # Baja todas las imagenes docker (si estan activas)
+        from docker_odoo_env.commands.docker_down_command import DockerDownCommand
+        command = DockerDownCommand()
+        command.execute()
 
-def test_07(self):
-    """  hace clone o pull de todos los repos y las imagenes
-    """
-    command = PullCommand()
-    command.execute()
+    def test_07(self):
+        """  hace clone o pull de todos los repos y las imagenes
+        """
+        command = PullCommand()
+        command.execute()
 
-def test_08(self):
-    """ crea, actualiza el odoo.conf, segun en que ambiente estemos
-    """
-    command = OdooConfCommand()
-    command.execute()
+    def test_08(self):
+        """ crea, actualiza el odoo.conf, segun en que ambiente estemos
+        """
+        command = OdooConfCommand()
+        command.execute()
