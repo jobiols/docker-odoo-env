@@ -1,5 +1,19 @@
 # Docker Odoo Environment
 
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+    :target: https://travis-ci.org/jobiols/docker_odoo_env
+    :alt: Build Status
+
+.. |badge2| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+    :target: https://odoo-community.org/page/development-status
+    :alt: Codecov
+
+.. |badge3| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+    :target: https://odoo-community.org/page/development-status
+    :alt: Codefactor
+
+|badge1| |badge2| |badge3| 
+
 [![Build Status](https://travis-ci.org/jobiols/docker_odoo_env.svg?branch=master)](https://travis-ci.org/jobiols/docker_odoo_env)
 [![codecov](https://codecov.io/gh/jobiols/docker_odoo_env/branch/master/graph/badge.svg)](https://codecov.io/gh/jobiols/docker_odoo_env)
 [![CodeFactor](https://www.codefactor.io/repository/github/jobiols/docker_odoo_env/badge)](https://www.codefactor.io/repository/github/jobiols/docker_odoo_env)
