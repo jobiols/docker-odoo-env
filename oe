@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-
-from docker_odoo_env.command_line import main
-
-main()
