@@ -18,7 +18,7 @@ setuptools.setup(
     python_requires='>3.0',
     entry_points={
         'console_scripts': [
-            'oe=dov.click:click',
+            'oe=dov.click:cli',
             'sd=dov.sd:main',
             ],
     },
