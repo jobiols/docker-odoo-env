@@ -188,4 +188,4 @@ def _list_database(prod):
 
 
 if __name__ == "__main__":
-    cli()
+    cli(False)
