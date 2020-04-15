@@ -1,2 +1,2 @@
-pyyaml
-git-aggregator
+PyYAML
+tornado

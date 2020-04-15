@@ -1,0 +1,43 @@
+NOMBRE:
+
+    oe ps
+
+USO:
+
+    oe ps [-a]
+
+DESCRIPCION:
+    
+    Lista todos los contenedores que hay en el servidor
+
+PARAMETROS OPCIONALES
+
+    -a 
+    
+        lista ademas los contenedores detenidos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

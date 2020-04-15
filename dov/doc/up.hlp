@@ -1,0 +1,43 @@
+NOMBRE
+    oe up
+
+USO:
+
+    oe up [-c client_name] [-d database_name] [-e prod|debug]
+
+DESCRIPCION:
+
+    Crea y arranca los contenedores necesarios para que el ecosistema Odoo se ponga en funcionamiento.
+    Dependiendo si el ambiente esta configurado en modo de desarrollo o en modo producion puede levantar distintos contenedores y conectarlos de diferente manera.
+
+PARAMETROS OPCIONALES:
+
+    -c clientname
+
+        Nombre del cliente o nombre del proyecto, si se omite utiliza el ultimo nombre usado.
+
+    -d databasename
+
+        Nombre de la base de datos, si se omite se usa el nombre por defecto que es [clientname]_prod
+
+    -e prod|debug
+
+        Ambiente, determina en que ambiente se levanta el sistema, puede ser desarrollo o produccion.
+        Si se omite se utiliza el ultimo ambiente invocado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

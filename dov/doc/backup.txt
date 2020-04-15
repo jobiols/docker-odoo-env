@@ -1,7 +1,0 @@
-Hace una copia de respaldo
---------------------------
-
--d Database
-    Base de datos a respaldar, si no se escribe el parametro se hara un respaldo
-    de la base de datos de produccion por defecto.
-

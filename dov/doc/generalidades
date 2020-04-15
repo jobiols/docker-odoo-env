@@ -117,7 +117,7 @@ las instala o actualiza (apt-get update y docker)
 **qa**
 
 -d crear base de datos de test con el modulo default instalado. 
-    
+
 
 
 **wishes**

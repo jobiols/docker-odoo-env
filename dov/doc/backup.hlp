@@ -1,0 +1,43 @@
+NOMBRE:
+
+    oe backup
+
+USO:
+
+    oe backup [-c clientname] [-d databasename] [-e prod|debug]
+
+DESCRIPCION:
+
+    Genera un backup de la base de datos por defecto y lo pone en el directorio de bases de dato por defecto. El backup es siempre completo (dump+filestore)
+
+PARAMETROS OPCIONALES
+
+    -c clientname
+
+        Nombre del cliente o nombre del proyecto, si se omite utiliza el ultimo nombre usado.
+
+    -d databasename
+
+        Nombre de la base de datos, si se omite se usa el nombre por defecto que es [clientname]_prod
+
+    -e prod|debug
+
+        Ambiente, determina en que ambiente se levanta el sistema, puede ser desarrollo o produccion.
+        Si se omite se utiliza el ultimo ambiente invocado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
