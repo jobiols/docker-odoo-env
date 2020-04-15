@@ -1,3 +1,5 @@
+![Python package](https://github.com/jobiols/docker-odoo-env/workflows/Python%20package/badge.svg)
+
 Docker Odoo Environment
 =======================
 
