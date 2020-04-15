@@ -1,5 +1,15 @@
 {
     "python.linting.pylintEnabled": true,
     "python.linting.pydocstyleEnabled": false,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./dov",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true
 }
